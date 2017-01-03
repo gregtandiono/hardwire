@@ -4,7 +4,8 @@ const express    = require("express")
     , cors       = require("cors")
     , request    = require("superagent")
     , morgan     = require("morgan")
-    , app        = express();
+    , app        = express()
+    , io         = require("./adapters/operator-socket");
 
 app.use(morgan("combined"));
 
@@ -24,6 +25,10 @@ function promisifiedFS(filePath, data) {
     })
   })
 }
+
+// @NOTE
+// where to inject the socket code?
+// this method?
 
 function backupToRemoteServer(filePath) {
   return new Promise((resolve, reject) => {
@@ -64,5 +69,5 @@ app.post("/save", (req, res) => {
 })
 
 app.listen(2222, () => {
-  console.log("client server is listening on port", 2222);
+  console.log("operator server is listening on port", 2222);
 })
