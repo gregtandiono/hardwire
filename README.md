@@ -27,3 +27,9 @@ Consider this a `headless` browser for the sake of testing
 ## TODO
 - Automation via socket
 - Manual sync capability
+- Operator interface
+- Master interface
+
+## NOTE
+
+Please consider the fact that this is only a prototype, when we do port this to production, each server application should remain separate (for ease of deployment and whatnot)
