@@ -6,7 +6,8 @@ const express    = require("express")
     , morgan     = require("morgan")
     , multer     = require("multer")
     , upload     = multer({ dest: "remote-backup/" })
-    , app        = express();
+    , app        = express()
+    , io         = require("./adapters/master-socket");
 
 app.use(morgan("combined"));
 
@@ -17,9 +18,8 @@ app.use(cors());
 
 app.post("/backup", upload.single("backup"), (req, res) => {
   res.status(200).json({ message: "file successfully uploaded" })
-  // console.log(req.body); // checks the request body for sanity check
-})
+});
 
 app.listen(3333, () => {
-  console.log("remote backup server is listening on port", 3333);
-})
+  console.log("master server is listening on port", 3333);
+});
