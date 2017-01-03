@@ -15,7 +15,7 @@ if (process.env.NODE_ENV) {
 
 var config = require("../config/" + env + ".json");
 var io = require("socket.io")(config["socket-operator"]);
-var socketAdapter = null;
+
 io.on("connection", function(socket) {
   console.log("a user connected");
   socket.emit("initiation", {message: "connected to socket server"});
