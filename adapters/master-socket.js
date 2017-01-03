@@ -20,15 +20,32 @@ io.on("initiation", function(data) {
   // Verify that socket connection has established properly
   // between operator and master
   console.log("connected to client socket server", data);
+});
+
+io.on("save:local:init", function(data) {
+  // I'm leaving these blank, in
+  // case we want to notify master interface
+  console.log("message:", data);
 })
 
-// io.on("connection", function(socket) {
-//   console.log("a user connected");
-//   socket.emit("initiation", {message: "connected to socket server"});
-//   socket.on("disconnect", function() {
-//     console.log("user disconnected");
-//     socket.emit("user disconnected");
-//   })
-// });
+io.on("save:local:success", function(data) {
+  // I'm leaving these blank, in
+  // case we want to notify master interface
+  console.log("message:", data);
+})
+
+io.on("save:remote:init", function(data) {
+  console.log("message:", data);
+})
+
+io.on("save:remote:success", function(data) {
+  // @NOTE
+  console.log("message:", data);
+})
+
+io.on("save:remote:fail", function(data) {
+  // @NOTE
+  // ok this is where I'm stuck.
+})
 
 module.exports = io;

@@ -26,10 +26,6 @@ function promisifiedFS(filePath, data) {
   })
 }
 
-// @NOTE
-// where to inject the socket code?
-// this method?
-
 function backupToRemoteServer(filePath) {
   return new Promise((resolve, reject) => {
     request.post("http://localhost:3333/backup")
@@ -47,22 +43,25 @@ function backupToRemoteServer(filePath) {
 
 app.post("/save", (req, res) => {
   var file = "./backup/backup.json";
+  io.emit("save:local:init", { message: "operator attempting to save to disk..." });
   promisifiedFS(file, req.body)
     .then(() => {
-      res.status(200).json({ message: "file has been saved locally" })
+      io.emit("save:local:success", { message: "operator successfully saved file to disk" })
+      res.status(200).json({ message: "file saved to disk" })
     })
     .then(() => {
+      io.emit("save:remote:init", { message: "operator attempting to backup data to remote server..." });
       backupToRemoteServer(file)
         .then((backupResponse) => {
-          console.log("file has been stored on remote server \n", backupResponse.body);
+          io.emit("save:remote:success", { message: "remote server successfully received packet" });
         })
         .catch((err) => {
-          // this is where we do sockets instead of this
-          // we can ask the server to retry connection and whatnot
-          // definitely abstracted
+          io.emit("save:remote:fail", { message: "remote server failed to save packet" });
           console.log("failed to backup", err)
         })
+
     })
+
     .catch((err) => {
       res.status(400).json({ error: err })
     })
