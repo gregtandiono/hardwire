@@ -14,15 +14,21 @@ if (process.env.NODE_ENV) {
 }
 
 var config = require("../config/" + env + ".json");
-var io = require("socket.io")(config["socket-master"]);
-var socketAdapter = null;
-io.on("connection", function(socket) {
-  console.log("a user connected");
-  socket.emit("initiation", {message: "connected to socket server"});
-  socket.on("disconnect", function() {
-    console.log("user disconnected");
-    socket.emit("user disconnected");
-  })
-});
+var io = require("socket.io-client")("http://localhost:1339");
+
+io.on("initiation", function(data) {
+  // Verify that socket connection has established properly
+  // between operator and master
+  console.log("connected to client socket server", data);
+})
+
+// io.on("connection", function(socket) {
+//   console.log("a user connected");
+//   socket.emit("initiation", {message: "connected to socket server"});
+//   socket.on("disconnect", function() {
+//     console.log("user disconnected");
+//     socket.emit("user disconnected");
+//   })
+// });
 
 module.exports = io;
