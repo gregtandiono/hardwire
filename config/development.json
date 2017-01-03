@@ -1,4 +1,5 @@
 {
   "port": "1337",
-  "socket": "1339"
+  "socket-operator": "1339",
+  "socket-master": "1336"
 }
