@@ -1,3 +1,8 @@
+/**
+ * operator-server.js
+ * [EXPRESS REST SERVER]
+ */
+
 const express    = require("express")
     , bodyParser = require("body-parser")
     , fs         = require("fs")
@@ -7,12 +12,23 @@ const express    = require("express")
     , app        = express()
     , io         = require("./adapters/operator-socket");
 
+var env = "development";
+if (process.env.NODE_ENV) {
+  env = process.env.NODE_ENV;
+  console.log("NODE_ENV: ", env)
+}
+
+const config = require(`./config/${env}.json`)
+
 app.use(morgan("combined"));
 
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
 // enable cross origin sharing
-app.use(cors());
+app.use(compression());
+app.use(logger("dev"));
+app.use(cors);
+app.use(express.static("public"));
 
 function promisifiedFS(filePath, data) {
   return new Promise((resolve, reject) => {
@@ -65,8 +81,12 @@ app.post("/save", (req, res) => {
     .catch((err) => {
       res.status(400).json({ error: err })
     })
-})
+});
 
-app.listen(2222, () => {
-  console.log("operator server is listening on port", 2222);
-})
+app.get("*", (req, res) => {
+  res.sendFile(__dirname + "/clients/oprator/index.html");
+});
+
+app.listen(config.port, () => {
+  console.log("operator server is running on port:", config.port);
+});
