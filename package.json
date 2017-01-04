@@ -2,9 +2,14 @@
   "name": "wired-backup",
   "version": "1.0.0",
   "description": "",
-  "main": "backup-server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed": "node ./tests/seed.js",
+    "test": "npm run seed && NODE_ENV=test mocha --require ./tests/global-test-config.js ./tests/**/* --recursive",
+    "watch-js": "watchify ./clients/operator/javascripts/src/main.js -d -o ./clients/operator/javascripts/dist/main.bundle.js -v",
+    "build-js": "browserify ./clients/operator/javascripts/src/main.js -d -o ./clients/operator/javascripts/dist/main.bundle.js -v",
+    "watch": "npm run watch-js",
+    "build": "npm run build-js",
+    "build:prod": "npm run build && uglifyjs ./clients/operator/dist/javascripts/main.bundle.js -o ./clients/operator/dist/javascripts/main.bundle.js --compress"
   },
   "keywords": [],
   "author": "",
@@ -35,10 +40,23 @@
     "validator": "^6.2.0"
   },
   "devDependencies": {
-    "babel-preset-es2016": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.1",
     "watchify": "^3.8.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015",
+            "react"
+          ]
+        }
+      ]
+    ]
   }
 }
