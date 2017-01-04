@@ -3,14 +3,16 @@
  * [EXPRESS REST SERVER]
  */
 
-const express    = require("express")
-    , bodyParser = require("body-parser")
-    , fs         = require("fs")
-    , cors       = require("cors")
-    , request    = require("superagent")
-    , morgan     = require("morgan")
-    , app        = express()
-    , io         = require("./adapters/operator-socket");
+const express     = require("express")
+    , bodyParser  = require("body-parser")
+    , fs          = require("fs")
+    , cors        = require("cors")
+    , request     = require("superagent")
+    , morgan      = require("morgan")
+    , compression = require("compression")
+    , path        = require("path")
+    , app         = express()
+    , io          = require("./adapters/operator-socket");
 
 var env = "development";
 if (process.env.NODE_ENV) {
@@ -21,14 +23,15 @@ if (process.env.NODE_ENV) {
 const config = require(`./config/${env}.json`)
 
 app.use(morgan("combined"));
-
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
-// enable cross origin sharing
 app.use(compression());
-app.use(logger("dev"));
-app.use(cors);
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "clients", "operator")));
+app.use(cors); // enable cross origin
+
+app.get("*", (req, res) => {
+  res.sendFile(__dirname + "/clients/operator/index.html");
+});
 
 function promisifiedFS(filePath, data) {
   return new Promise((resolve, reject) => {
@@ -57,6 +60,8 @@ function backupToRemoteServer(filePath) {
   })
 }
 
+
+
 app.post("/save", (req, res) => {
   var file = "./backup/backup.json";
   io.emit("save:local:init", { message: "operator attempting to save to disk..." });
@@ -83,10 +88,10 @@ app.post("/save", (req, res) => {
     })
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(__dirname + "/clients/oprator/index.html");
-});
+
 
 app.listen(config.port, () => {
   console.log("operator server is running on port:", config.port);
 });
+
+module.exports = app;

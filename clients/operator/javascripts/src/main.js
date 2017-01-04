@@ -13,4 +13,4 @@ class App extends Component {
 
 const mountNode = document.getElementById("main-react-app")
 
-ReactDOM.render(<App />, mountNode)
+ReactDOM.render(<App />, mountNode);
