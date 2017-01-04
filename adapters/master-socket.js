@@ -46,6 +46,7 @@ io.on("save:remote:success", function(data) {
 io.on("save:remote:fail", function(data) {
   // @NOTE
   // ok this is where I'm stuck.
+  io.emit("save:remote:fail", { message: "failed" });
 })
 
 module.exports = io;
