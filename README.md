@@ -1,5 +1,7 @@
 # Wired Backup
 
+*this repository is officially locked from any more writes. This repo will remain as a reference to the hardwire project*
+
 This is a testing ground for local backups without interface (pure node)
 
 requirements:
