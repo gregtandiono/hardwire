@@ -1,4 +1,19 @@
-DROP TABLE IF EXISTS users;
+-- Hardwire Agent DB Schema
+
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS players CASCADE;
+DROP TABLE IF EXISTS banks CASCADE;
+DROP TABLE IF EXISTS games CASCADE;
+DROP TABLE IF EXISTS transactions CASCADE;
+DROP TABLE IF EXISTS sites CASCADE;
+
+DROP TRIGGER IF EXISTS update_modified_column ON users;
+DROP TRIGGER IF EXISTS update_modified_column ON players;
+DROP TRIGGER IF EXISTS update_modified_column ON banks;
+DROP TRIGGER IF EXISTS update_modified_column ON games;
+DROP TRIGGER IF EXISTS update_modified_column ON transactions;
+DROP TRIGGER IF EXISTS update_modified_column ON sites;
+
 DROP TYPE IF EXISTS user_types;
 DROP TYPE IF EXISTS bank_types;
 
