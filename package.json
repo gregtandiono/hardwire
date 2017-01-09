@@ -5,11 +5,11 @@
   "scripts": {
     "seed": "node ./tests/seed.js",
     "test": "npm run seed && NODE_ENV=test mocha --require ./tests/global-test-config.js ./tests/**/* --recursive",
-    "watch-js": "watchify ./clients/operator/javascripts/src/main.js -d -o ./clients/operator/javascripts/dist/main.bundle.js -v",
-    "build-js": "browserify ./clients/operator/javascripts/src/main.js -d -o ./clients/operator/javascripts/dist/main.bundle.js -v",
+    "watch-js": "watchify ./public/javascripts/src/main.js -d -o ./public/javascripts/dist/main.bundle.js -v",
+    "build-js": "browserify ./public/javascripts/src/main.js -d -o ./public/javascripts/dist/main.bundle.js -v",
     "watch": "npm run watch-js",
     "build": "npm run build-js",
-    "build:prod": "npm run build && uglifyjs ./clients/operator/dist/javascripts/main.bundle.js -o ./clients/operator/dist/javascripts/main.bundle.js --compress"
+    "build:prod": "npm run build && uglifyjs ./public/dist/javascripts/main.bundle.js -o ./public/dist/javascripts/main.bundle.js --compress"
   },
   "keywords": [],
   "author": "",
@@ -24,8 +24,11 @@
     "faker": "^3.1.0",
     "immutable": "^3.8.1",
     "jsonwebtoken": "^7.2.1",
+    "knex": "^0.12.6",
     "morgan": "^1.7.0",
     "multer": "^1.2.1",
+    "node-uuid": "^1.4.7",
+    "pg": "^6.1.2",
     "react": "^15.4.1",
     "react-data-grid": "^1.0.75",
     "react-dom": "^15.4.1",
