@@ -36,9 +36,10 @@ CREATE TABLE IF NOT EXISTS players(
   account_bca varchar(255),
   account_mandiri varchar(255),
   account_other varchar(255),
-  acccount_bca_holder varchar(255),
+  account_bca_holder varchar(255),
   account_mandiri_holder varchar(255),
   account_other_holder varchar(255),
+  account_other_name varchar(255),
   ym varchar(255),
   email varchar(255),
   notes varchar(255),
@@ -72,3 +73,30 @@ CREATE TABLE IF NOT EXISTS games(
 
 CREATE TRIGGER update_modified_column
 BEFORE UPDATE ON games FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+
+-- Transactions Table
+CREATE TABLE IF NOT EXISTS transactions(
+  id UUID PRIMARY KEY NOT NULL,
+  name varchar(255) NOT NULL,
+  player_id UUID NOT NULL,
+  site_id UUID NOT NULL,
+  operator_id UUID NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  reff varchar(255),
+  transfer int,
+  deposit int,
+  withdraw int,
+  bonus int,
+  transaction_notes varchar(255),
+  transfer_notes varchar(255),
+  bonus_notes varchar(255),
+  bank varchar(255) NOT NULL,
+  FOREIGN KEY (player_id) REFERENCES players (id),
+  FOREIGN KEY (site_id) REFERENCES sites (id),
+  FOREIGN KEY (operator_id) REFERENCES users (id)
+);
+
+CREATE TRIGGER update_modified_column
+BEFORE UPDATE ON transactions FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
