@@ -10,7 +10,7 @@ var express          = require("express")
   , User             = require("../models/User")
   , router           = express.Router()
 
-router.post('/signup', (req, res) => {
+router.post('/signup', (req, res) => { // this is to create operators / managers
   const user = new User();
   user.signup(req.body)
     .then(results => { res.json({ data: results }) })
