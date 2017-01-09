@@ -30,4 +30,4 @@ class Game extends BaseModel {
   }
 }
 
-module.exports = Bank;
+module.exports = Game; 
