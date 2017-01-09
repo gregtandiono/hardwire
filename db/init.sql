@@ -51,3 +51,24 @@ CREATE TABLE IF NOT EXISTS players(
 
 CREATE TRIGGER update_modified_column
 BEFORE UPDATE ON players FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+
+-- Games Table
+CREATE TABLE IF NOT EXISTS games(
+  id UUID PRIMARY KEY NOT NULL,
+  name varchar(255) NOT NULL,
+  player_id UUID NOT NULL,
+  balance int,
+  deposit int,
+  withdraw int,
+  bonus int,
+  cancel_bonus int,
+  notes varchar(255),
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  deleted_at TIMESTAMP WITH TIME ZONE,
+  FOREIGN KEY (player_id) REFERENCES players (id),
+);
+
+CREATE TRIGGER update_modified_column
+BEFORE UPDATE ON games FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
