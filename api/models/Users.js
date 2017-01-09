@@ -12,6 +12,12 @@ var Promise       = require("bluebird")
   , BaseModel     = require("./BaseModel")
   , secret        = require("../helpers/secret");
 
+/**
+ * @NOTE
+ * UUID is generated from the client-side
+ * because we're going to allow cache or offline mode
+ */
+
 var attributes = {
   id       : {value: "", type: "uuid", required: true},
   name     : {value: "", type: "string", required: true},
