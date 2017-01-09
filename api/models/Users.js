@@ -13,7 +13,7 @@ var Promise       = require("bluebird")
   , secret        = require("../helpers/secret");
 
 var attributes = {
-  uuid     : {value: "", type: "uuid", required: true},
+  id       : {value: "", type: "uuid", required: true},
   name     : {value: "", type: "string", required: true},
   username : {value: "", type: "string", required: true},
   password : {value: "", type: "string", required: true},
