@@ -77,43 +77,6 @@ function seedUser() {
   })
 }
 
-function seedPosts() {
-  var bulkCreatePromise = [];
-  for (var i = 0; i < 20; i++) {
-    bulkCreatePromise.push(new Promise((resolve, reject) => {
-      loginOneUser().then(response => {
-        var userID = response.data.user_id;
-        var token  = response.data.token;
-        chai.request(app)
-          .post("/api/posts")
-          .set("authorization", token)
-          .send({
-            title: faker.random.words(),
-            owner_id: userID,
-            details: faker.lorem.paragraphs()
-          })
-          .end((err, res) => {
-            if (err) {
-              reject(err)
-            }
-            resolve();
-          })
-      }).catch(loginOneUserErr => { reject(loginOneUserErr) });
-    }));
-  }
-  return new Promise((resolve, reject) => {
-    Promise.all(bulkCreatePromise)
-      .then(() => {
-        console.log("Successfully seeded post table");
-        resolve();
-      })
-      .catch(err => {
-        console.log("failed to seed post table");
-        reject(err);
-      })
-  })
-}
-
 tearDown()
   .then(() => {
     seedUser().then(() => {
