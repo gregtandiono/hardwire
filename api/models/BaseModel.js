@@ -44,6 +44,19 @@ class BaseModel {
     })
   }
 
+  fetchAllRelatedToPlayer(playerID) {
+    var self = this;
+    return new Promise((resolve, reject) => {
+      pg
+        .select("*")
+        .from(self.table)
+        .where({ player_id: playerID })
+        .orderBy("created_at", "desc")
+        .then(rows => { resolve(rows) }) // should return an array of banks
+        .catch(error => { reject(error) })
+    })
+  }
+
   // @NOTE
   // Do we need server-side pagination?
   fetchChunk() {
