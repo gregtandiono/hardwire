@@ -144,10 +144,11 @@ CREATE TABLE IF NOT EXISTS transactions(
   transaction_notes varchar(255),
   transfer_notes varchar(255),
   bonus_notes varchar(255),
-  bank varchar(255) NOT NULL,
+  bank_id varchar(255) NOT NULL,
   FOREIGN KEY (player_id) REFERENCES players (id),
   FOREIGN KEY (site_id) REFERENCES sites (id),
-  FOREIGN KEY (operator_id) REFERENCES users (id)
+  FOREIGN KEY (operator_id) REFERENCES users (id),
+  FOREIGN KEY (bank_id) REFERENCES banks (id)
 );
 
 CREATE TRIGGER update_modified_column
