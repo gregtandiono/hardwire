@@ -12,7 +12,7 @@ var express          = require("express")
 
 router.post("/", (req, res) => {
   const game = new Game();
-  bank
+  game  
     .create(req.body)
     .then(results => { res.status(200).json({ data: results }) })
     .catch(error => { res.status(400).json({ error }) })
