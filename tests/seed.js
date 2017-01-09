@@ -23,12 +23,16 @@ chai.use(chaiHttp);
 var User         = require("../api/models/User");
 var loginOneUser = require("./helpers/loginOneUser");
 
-var tables = ["post_details", "posts", "users"];
+var tables = ["banks", "users", "players", "games", "sites", "transactions"];
 
 var users = [
-  {name: "Elliot", username: "jlinarte", password: "awesomepasswordisawesome", id: "d350fbc2-90b6-4414-8d35-1f6aacf13718"},
-  {name: "Sam Sepiol", username: "samsepiol", password: "mrrobotisawesome", id: "32b8a9fe-32f3-48bb-9a6d-bd551e713e14"}
+  {name: "kim soejipto", username: "snafu01", type: "agent", password: "theLongestPasswordOnFuckingEarth"},
+  {name: "wahyu", username: "glasgow", type: "operator", password: "thisIsALong0Password"},
+  {name: "gregory tandiono", username: "gregtandiono", type: "manager", password: "anotherLongPassw0rd"},
+  {name: "aloenk", username: "al03nk", type: "admin", password: "thisPasswordShouldBeFuckingP0etry"}
 ];
+
+var players = [];
 
 
 // =============================
