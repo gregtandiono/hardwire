@@ -10,7 +10,7 @@ var Promise          = require("bluebird")
   , pg               = require("../adapters/db")
   , validator        = require("../helpers/validator");
 
-class AbstractModel {
+class BaseModel {
   constructor(attributes, table) {
     this.attributes = attributes;
     this.table = table;
@@ -126,4 +126,4 @@ class AbstractModel {
   }
 }
 
-module.exports = AbstractModel;
+module.exports = BaseModel;
