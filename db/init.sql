@@ -75,6 +75,21 @@ CREATE TRIGGER update_modified_column
 BEFORE UPDATE ON games FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 
+-- Site Table
+CREATE TABLE IF NOT EXISTS sites(
+  id UUID PRIMARY KEY NOT NULL,
+  url varchar(255),
+  name varchar(100),
+  operator_id UUID,
+  modified_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  FOREIGN KEY (operator_id) REFERENCES users (id)
+);
+
+CREATE TRIGGER update_modified_column
+BEFORE UPDATE ON sites FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+
 -- Transactions Table
 CREATE TABLE IF NOT EXISTS transactions(
   id UUID PRIMARY KEY NOT NULL,
