@@ -1,5 +1,5 @@
 /**
- * Players.js
+ * Player.js
  *
  * [MODEL]
  */
@@ -19,7 +19,7 @@ var attributes = {
   operator_id : {value: "", type: "UUID", required: true},
 };
 
-class Players extends BaseModel {
+class Player extends BaseModel {
   constructor() {
     super();
     this.attributes = attributes;
@@ -27,4 +27,4 @@ class Players extends BaseModel {
   }
 }
 
-module.exports = Players;
+module.exports = Player;
