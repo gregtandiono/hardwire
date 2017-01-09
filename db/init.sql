@@ -13,6 +13,7 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+-- User Table
 CREATE TABLE IF NOT EXISTS users(
   id UUID PRIMARY KEY NOT NULL,
   name varchar(255) NOT NULL,
@@ -27,9 +28,26 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TRIGGER update_modified_column
 BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
-
 -- Player Table
 CREATE TABLE IF NOT EXISTS players(
   id UUID PRIMARY KEY NOT NULL,
   name varchar(255) NOT NULL,
-)
+  cellphone varchar(255),
+  account_bca varchar(255),
+  account_mandiri varchar(255),
+  account_other varchar(255),
+  acccount_bca_holder varchar(255),
+  account_mandiri_holder varchar(255),
+  account_other_holder varchar(255),
+  ym varchar(255),
+  email varchar(255),
+  notes varchar(255),
+  operator_id UUID NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  deleted_at TIMESTAMP WITH TIME ZONE,
+  FOREIGN KEY (operator_id) REFERENCES users (id),
+);
+
+CREATE TRIGGER update_modified_column
+BEFORE UPDATE ON players FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
