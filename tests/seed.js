@@ -19,20 +19,14 @@ var Promise        = require("bluebird")
 chai.use(chaiAsPromised);
 chai.use(chaiHttp);
 
+// LOAD FIXTURES
+var setUserFixtures = require("./fixtures/users");
+
 // Load models
 var User         = require("../api/models/User");
 var loginOneUser = require("./helpers/loginOneUser");
 
 var tables = ["banks", "users", "players", "games", "sites", "transactions"];
-
-var users = [
-  {name: "kim soejipto", username: "snafu01", type: "agent", password: "theLongestPasswordOnFuckingEarth"},
-  {name: "wahyu", username: "glasgow", type: "operator", password: "thisIsALong0Password"},
-  {name: "gregory tandiono", username: "gregtandiono", type: "manager", password: "anotherLongPassw0rd"},
-  {name: "aloenk", username: "al03nk", type: "admin", password: "thisPasswordShouldBeFuckingP0etry"}
-];
-
-var players = [];
 
 
 // =============================
@@ -59,7 +53,7 @@ function tearDown() {
 function seedUser() {
   return new Promise((resolve, reject) => {
     var bulkCreatePromise = [];
-    users.forEach(user => {
+    setUserFixtures.forEach(user => {
       var newUser = new User()
       bulkCreatePromise.push(
         newUser.signup(user)
