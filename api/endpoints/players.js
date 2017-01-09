@@ -52,6 +52,22 @@ router.get("/:id", (req, res) => {
       res.status(200).json({ data: playerRecord })
     })
     .catch(err => { res.status(400).json({ error: err }) })
+});
+
+router.put("/:id", (req, res) => {
+  const player = new Player();
+  player
+    .update(req.params.id, req.body)
+    .then((() => { res.status(200).json({ data: "record successfully updated" }) }))
+    .catch(err => { res.status(400).json({ error: err }) });
+});
+
+router.delete("/:id", (req, res) => {
+  const player = new Player();
+  player
+    .destroy(req.params.id)
+    .then(() => res.status(200).json({ data: "record successfully deleted" }))
+    .catch(err => res.status(400).json({ error: err }))
 })
 
 module.exports = router;
