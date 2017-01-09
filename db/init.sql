@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS games(
   id UUID PRIMARY KEY NOT NULL,
   name varchar(255) NOT NULL,
   player_id UUID NOT NULL,
+  operator_id UUID NOT NULL,
   balance int,
   deposit int,
   withdraw int,
@@ -104,6 +105,7 @@ CREATE TABLE IF NOT EXISTS games(
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   deleted_at TIMESTAMP WITH TIME ZONE,
   FOREIGN KEY (player_id) REFERENCES players (id),
+  FOREIGN KEY (operator_id) REFERENCES users (id)
 );
 
 CREATE TRIGGER update_modified_column
