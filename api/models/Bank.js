@@ -25,7 +25,7 @@ class Bank extends BaseModel {
   constructor() {
     super();
     this.attributes = attributes;
-    this.table = "players";
+    this.table = "banks";
   }
 }
 
