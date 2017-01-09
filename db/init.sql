@@ -1,9 +1,11 @@
 DROP TABLE IF EXISTS users;
 DROP TYPE IF EXISTS user_types;
+DROP TYPE IF EXISTS bank_types;
 
 -- This use is for internal use only
 -- not to be confused with `player` or `member`
 CREATE TYPE user_types AS ENUM ("admin", "agent", "manager", "operator");
+CREATE TYPE bank_types as ENUM ("bca", "mandiri", "other");
 
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
@@ -33,13 +35,13 @@ CREATE TABLE IF NOT EXISTS players(
   id UUID PRIMARY KEY NOT NULL,
   name varchar(255) NOT NULL,
   cellphone varchar(255),
-  account_bca varchar(255),
-  account_mandiri varchar(255),
-  account_other varchar(255),
-  account_bca_holder varchar(255),
-  account_mandiri_holder varchar(255),
-  account_other_holder varchar(255),
-  account_other_name varchar(255),
+  -- account_bca varchar(255),
+  -- account_mandiri varchar(255),
+  -- account_other varchar(255),
+  -- account_bca_holder varchar(255),
+  -- account_mandiri_holder varchar(255),
+  -- account_other_holder varchar(255),
+  -- account_other_name varchar(255),
   ym varchar(255),
   email varchar(255),
   notes varchar(255),
@@ -53,6 +55,24 @@ CREATE TABLE IF NOT EXISTS players(
 CREATE TRIGGER update_modified_column
 BEFORE UPDATE ON players FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
+-- Banks Table
+CREATE TABLE IF NOT EXISTS banks(
+  id UUID PRIMARY KEY NOT NULL,
+  name bank_types,
+  player_id UUID NOT NULL,
+  other_name varchar(255),
+  account_holder varchar(255),
+  account_number varchar(255),
+  username varchar(255) NOT NULL,
+  password varchar(255) NOT NULL,
+  operator_id UUID NOT NULL,
+  modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  FOREIGN KEY (operator_id) REFERENCES users (id),
+  FOREIGN KEY (player_id) REFERENCES players (id)
+);
+
+CREATE TRIGGER update_modified_column
+BEFORE UPDATE ON banks FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 -- Games Table
 CREATE TABLE IF NOT EXISTS games(
