@@ -19,8 +19,8 @@ DROP TYPE IF EXISTS bank_types;
 
 -- This use is for internal use only
 -- not to be confused with `player` or `member`
-CREATE TYPE user_types AS ENUM ("admin", "agent", "manager", "operator");
-CREATE TYPE bank_types as ENUM ("bca", "mandiri", "other");
+CREATE TYPE user_types AS ENUM ('admin', 'agent', 'manager', 'operator');
+CREATE TYPE bank_types as ENUM ('bca', 'mandiri', 'other');
 
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS players(
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   deleted_at TIMESTAMP WITH TIME ZONE,
-  FOREIGN KEY (operator_id) REFERENCES users (id),
+  FOREIGN KEY (operator_id) REFERENCES users (id)
 );
 
 CREATE TRIGGER update_modified_column
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS sites(
   url varchar(255),
   name varchar(100),
   operator_id UUID,
-  modified_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   FOREIGN KEY (operator_id) REFERENCES users (id)
 );
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS transactions(
   transaction_notes varchar(255),
   transfer_notes varchar(255),
   bonus_notes varchar(255),
-  bank_id varchar(255) NOT NULL,
+  bank_id UUID NOT NULL,
   FOREIGN KEY (player_id) REFERENCES players (id),
   FOREIGN KEY (site_id) REFERENCES sites (id),
   FOREIGN KEY (operator_id) REFERENCES users (id),
