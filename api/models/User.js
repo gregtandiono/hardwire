@@ -10,7 +10,8 @@ var Promise       = require("bluebird")
   , jwt           = require("jsonwebtoken")
   , pg            = require("../adapters/db")
   , BaseModel     = require("./BaseModel")
-  , secret        = require("../helpers/secret");
+  , secret        = require("../helpers/secret")
+  , hash          = require("../helpers/hash");
 
 /**
  * @NOTE
@@ -53,6 +54,19 @@ class User extends BaseModel {
             .catch(lookupErr => { reject(lookupErr) });
         })
         .catch(validationErr => { reject(validationErr) });
+    })
+  }
+
+  superUserSignup(data, secretHash) {
+    var self = this;
+    return new Promise((resolve, reject) => {
+      if (secretHash !== hash) {
+        reject("hash is incompatible, system might be compromised");
+      }
+
+      self.signup(data)
+        .then(() => { resolve() })
+        .catch(error => { reject(error) })
     })
   }
 

@@ -56,7 +56,7 @@ function seedUser() {
     setUserFixtures.forEach(user => {
       var newUser = new User()
       bulkCreatePromise.push(
-        newUser.signup(user)
+        newUser.superUserSignup(user, "3adc0f1179ef32678f9d22219298c2b1")
       )
     })
     Promise.all(bulkCreatePromise)

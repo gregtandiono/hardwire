@@ -1,9 +1,10 @@
 {
-  "port": "1337",
+  "port": "1338",
   "socket": "1336",
   "user": "postgres",
   "password": "04120080090",
   "secret": "ilovelasagnas",
   "database": "hardwire_agent",
-  "host": "127.0.0.1"
+  "host": "127.0.0.1",
+  "secretHash": "3adc0f1179ef32678f9d22219298c2b1"
 }

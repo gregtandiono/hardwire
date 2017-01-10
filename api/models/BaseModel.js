@@ -150,6 +150,23 @@ class BaseModel {
     var mappedResults = this._mapper(data, optionalAttributes);
     return validator(mappedResults); // this returns a promise
   }
+
+  // @NOTE
+  // this private method is an extent of ACL
+  // and it should also be done on the client / operator side
+
+  _permissionChecker(userID) { // should return a promise and resolves user type
+    return new Promise((resolve, reject) => {
+      pg
+        .select("*")
+        .from("users")
+        .where("id", userID)
+        .then(rows => {
+          resolve(rows[0].type)
+        })
+        .catch(error => { reject(error) })
+    })
+  }
 }
 
 module.exports = BaseModel;
