@@ -70,10 +70,23 @@ class User extends BaseModel {
       if (secretHash !== hash) {
         reject("hash is incompatible, system might be compromised");
       }
-
-      self.signup(data)
-        .then(() => { resolve() })
-        .catch(error => { reject(error) })
+      self._validate(data)
+        .then(filteredData => {
+          filteredData.password = bcrypt.hashSync(filteredData.password, 10);
+          self._lookup(filteredData.username)
+            .then(lookupResult => {
+              if (lookupResult.length == 0) {
+                self
+                  .create(filteredData)
+                  .then(() => { resolve() })
+                  .catch(signupErr => { reject(signupErr) });
+              } else {
+                reject("this user already exists");
+              }
+            })
+            .catch(lookupErr => { reject(lookupErr) });
+        })
+        .catch(validationErr => { reject(validationErr) });
     })
   }
 
