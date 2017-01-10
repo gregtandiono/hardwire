@@ -14,9 +14,9 @@ var chai          = require("chai")
 chai.use(chaiAsPromised);
 chai.use(chaiHttp);
 
-var app                  = require("../../server")
-  , loginOneUser         = require("../helpers/loginOneUser")
-  , nonSuperUserFixtures = require("../fixtures/non-super-users")
+var app            = require("../../server")
+  , loginOneUser   = require("../helpers/loginOneUser")
+  , playerFixtures = require("../fixtures/players")
 
 describe("Users", () => {
   it("should allow an agent to be able to create an operator", done => {
