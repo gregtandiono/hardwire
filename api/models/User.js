@@ -39,26 +39,29 @@ class User extends BaseModel {
     return new Promise((resolve, reject) => {
       self._permissionChecker(userID)
         .then(userType => {
-          if (userType !== "admin" || userType !== "agent") {
+          if (userType == "admin" || userType == "agent") {
+            
+            self._validate(data)
+              .then(filteredData => {
+                filteredData.password = bcrypt.hashSync(filteredData.password, 10);
+                self._lookup(filteredData.username)
+                  .then(lookupResult => {
+                    if (lookupResult.length == 0) {
+                      self
+                        .create(filteredData)
+                        .then(() => { resolve() })
+                        .catch(signupErr => { reject(signupErr) });
+                    } else {
+                      reject("this user already exists");
+                    }
+                  })
+                  .catch(lookupErr => { reject(lookupErr) });
+              })
+              .catch(validationErr => { reject(validationErr) });
+
+          } else {
             reject("user has no privilege to create users")
           }
-          self._validate(data)
-            .then(filteredData => {
-              filteredData.password = bcrypt.hashSync(filteredData.password, 10);
-              self._lookup(filteredData.username)
-                .then(lookupResult => {
-                  if (lookupResult.length == 0) {
-                    self
-                      .create(filteredData)
-                      .then(() => { resolve() })
-                      .catch(signupErr => { reject(signupErr) });
-                  } else {
-                    reject("this user already exists");
-                  }
-                })
-                .catch(lookupErr => { reject(lookupErr) });
-            })
-            .catch(validationErr => { reject(validationErr) });
         })
         .catch(permissionCheckerError => { reject(permissionCheckerError) })
     })

@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "seed": "node ./tests/seed.js",
-    "test": "npm run seed && NODE_ENV=test mocha --require ./tests/global-test-config.js ./tests/**/* --recursive",
+    "test": "NODE_ENV=test mocha --require ./tests/global-test-config.js ./tests/**/* --recursive",
     "watch-js": "watchify ./public/javascripts/src/main.js -d -o ./public/javascripts/dist/main.bundle.js -v",
     "build-js": "browserify ./public/javascripts/src/main.js -d -o ./public/javascripts/dist/main.bundle.js -v",
     "watch": "npm run watch-js",

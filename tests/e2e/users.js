@@ -23,15 +23,34 @@ describe("Users", () => {
   it("should be able to signup a new user", done => {
     loginOneUser("agent").should.be.fulfilled
       .then(agentInfo => {
-        console.log(agentInfo)
-        done();
-        // chai.request(app)
-        //   .post("/api/users/signup")
-        //   .send(nonSuperUserFixtures.validOperatorInput)
-        //   .end((err, res) => {
-        //     expect(res.status).to.equal(200);
-        //     done();
-        //   })
+        var agentID = agentInfo.data.user_id;
+        var token = agentInfo.data.token;
+        chai.request(app)
+          .post(`/api/users/signup/${agentID}`)
+          .set("Authorization", token)
+          .send(nonSuperUserFixtures.validOperatorInput)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            done();
+          })
+      })
+  });
+
+  it("should not allow operators to create users", done => {
+    loginOneUser("operator").should.be.fulfilled
+      .then(operatorInfo => {
+        var agentID = operatorInfo.data.user_id;
+        var token = operatorInfo.data.token;
+        chai.request(app)
+          .post(`/api/users/signup/${agentID}`)
+          .set("Authorization", token)
+          .send(nonSuperUserFixtures.validOperatorInput)
+          .end((err, res) => {
+            expect(res.status).to.equal(400);
+            expect(res.body).to.include.keys("error");
+            expect(res.body.error).to.equal("user has no privilege to create users");
+            done();
+          })
       })
   });
 
