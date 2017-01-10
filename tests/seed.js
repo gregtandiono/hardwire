@@ -9,16 +9,7 @@ var Promise        = require("bluebird")
   , faker          = require("faker")
   , app            = require("../server")
   , pg             = require("../api/adapters/db")
-  , chai           = require("chai")
-  , assert         = chai.assert
-  , expect         = chai.expect
-  , should         = chai.should()
-  , chaiAsPromised = require("chai-as-promised")
-  , chaiHttp       = require("chai-http");
-
-chai.use(chaiAsPromised);
-chai.use(chaiHttp);
-
+  
 // LOAD FIXTURES
 var setUserFixtures = require("./fixtures/users");
 
