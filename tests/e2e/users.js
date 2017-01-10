@@ -14,21 +14,33 @@ var chai          = require("chai")
 chai.use(chaiAsPromised);
 chai.use(chaiHttp);
 
-var app          = requireLocal("server")
-  , userFixtures = require("../fixtures/user")
-  , loginOneUser = require("../helpers/loginOneUser");
+var app                  = require("../../server")
+  , nonSuperUserFixtures = require("../fixtures/non-super-users")
+  , loginOneUser         = require("../helpers/loginOneUser");
+
+function somePromise() {
+  return new Promise((resolve, reject) => {
+    resolve("gooda")
+  })
+}
 
 describe("Users", () => {
 
-  it("should be able to signup a new user", done => {
+  it("should be able to create an operator-level user", (done) => {
+    // somePromise().should.be.fulfilled
+    //   .then(shit => {
+    //     console.log(shit)
+    //     done()
+    //   })
     chai.request(app)
       .post("/api/users/signup")
-      .send(userFixtures.validSignupData)
+      .send(nonSuperUserFixtures.validOperatorInput)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        done();
+        done()
       })
   });
+})
 
   // it("should be able to login existing users", done => {
   //   chai.request(app)
@@ -69,5 +81,3 @@ describe("Users", () => {
   //         })
   //     })
   // })
-
-})
