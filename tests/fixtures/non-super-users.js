@@ -1,3 +1,9 @@
+/**
+ * non-super-users.js
+ *
+ * [FIXTURE]
+ */
+
 module.exports = {
   validOperatorInput: {
     id: "003ac599-2b2a-40ad-8c29-b27ce5c314dc",

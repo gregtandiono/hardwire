@@ -1,3 +1,9 @@
+/**
+ * users.js
+ *
+ * [FIXTURES]
+ */
+
 module.exports = [
   {
     id: "0e3e49cd-04a5-4b59-9d59-05c29fff1498",
