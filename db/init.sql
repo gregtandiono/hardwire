@@ -16,11 +16,13 @@ DROP TRIGGER IF EXISTS update_modified_column ON sites;
 
 DROP TYPE IF EXISTS user_types;
 DROP TYPE IF EXISTS bank_types;
+DROP TYPE IF EXISTS system_ownership_types;
 
 -- This use is for internal use only
 -- not to be confused with `player` or `member`
 CREATE TYPE user_types AS ENUM ('admin', 'agent', 'manager', 'operator');
-CREATE TYPE bank_types as ENUM ('bca', 'mandiri', 'other');
+CREATE TYPE system_ownership_types AS ENUM ('agent', 'player');
+CREATE TYPE bank_types AS ENUM ('bca', 'mandiri', 'other');
 
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$
@@ -81,6 +83,7 @@ CREATE TABLE IF NOT EXISTS banks(
   username varchar(255) NOT NULL,
   password varchar(255) NOT NULL,
   operator_id UUID NOT NULL,
+  system_ownership system_ownership_types NOT NULL,
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   FOREIGN KEY (operator_id) REFERENCES users (id),
   FOREIGN KEY (player_id) REFERENCES players (id)
