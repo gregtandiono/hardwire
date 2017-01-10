@@ -74,9 +74,7 @@ function seedUser() {
 tearDown()
   .then(() => {
     seedUser().then(() => {
-      seedPosts().then(() => {
-        console.log("Shutting seeding process down");
-        process.exit()
-      })
+      console.log("Shutting seeding process down");
+      process.exit()
     })
   });

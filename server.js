@@ -8,6 +8,7 @@ var express      = require("express")
   , logger       = require("morgan")
   , cookieParser = require("cookie-parser")
   , bodyParser   = require("body-parser")
+  , cors         = require("cors")
   , compression  = require("compression") // optimization
   , app          = express();
 
