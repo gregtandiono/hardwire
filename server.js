@@ -21,6 +21,7 @@ if (process.env.NODE_ENV) {
 
 var config = require("./config/" + env + ".json");
 app.config = config;
+const baseApiURL = "/api";
 
 // LOAD ENDPOINTS
 var users = require("./api/endpoints/users");
@@ -43,13 +44,13 @@ app.use(cors);
 app.use(express.static("public"));
 
 // APPLY ENDPOINTS
-app.use("/auth", users);
-app.use("/users", users, auth);
-app.use("/players", players, auth);
-app.use("/games", games, auth);
-app.use("/sites", sites, auth);
-app.use("/transactions", transactions, auth);
-app.use("/banks", banks, auth);
+app.use(baseApiURL + "/auth", users);
+app.use(baseApiURL + "/users", users, auth);
+app.use(baseApiURL + "/players", players, auth);
+app.use(baseApiURL + "/games", games, auth);
+app.use(baseApiURL + "/sites", sites, auth);
+app.use(baseApiURL + "/transactions", transactions, auth);
+app.use(baseApiURL + "/banks", banks, auth);
 
 // SETUP STATIC FILE SERVING
 app.get("*", (req, res) => {
