@@ -70,4 +70,20 @@ describe("Users", () => {
       })
   });
 
+  it("should invalidate bad data input", done => {
+    loginOneUser("agent").should.be.fulfilled
+      .then(agentInfo => {
+        var agentID = agentInfo.data.user_id;
+        var token = agentInfo.data.token;
+        chai.request(app)
+          .post(`/api/users/signup/${agentID}`)
+          .set("Authorization", token)
+          .send(nonSuperUserFixtures.invalidOperatorInput)
+          .end((err, res) => {
+            expect(res.status).to.equal(400);
+            done();
+          })
+      })
+  });
+
 })

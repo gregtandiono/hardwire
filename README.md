@@ -10,3 +10,11 @@
 - There will be a simple client with socket capabilities
 - **Hardwire Agent** server will hold a database and a set of APIs for multiple **Hardwire Operator** servers
 - Need to create a wiki to hold all bearings of DB
+
+## Run Tests
+
+run `npm run seed && bash test-runner.sh` for windows
+
+*I don't know why `NODE_ENV` is an invalid bash command*
+
+run `npm run test` for MacOS
