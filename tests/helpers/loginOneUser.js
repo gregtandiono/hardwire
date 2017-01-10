@@ -16,17 +16,20 @@ chai.use(chaiHttp);
 
 var app = require("../../server");
 var userFixtures = require("../fixtures/users");
+
 var admin = userFixtures[3];
 var agent = userFixtures[0];
 var manager = userFixtures[2];
 var operator = userFixtures[1];
+
+var loginEndpoint = "/api/login";
 
 function loginOneUser(userType) {
   return new Promise((resolve, reject) => {
     switch (userType) {
       case "admin":
         chai.request(app)
-          .post("/api/users/auth")
+          .post(loginEndpoint)
           .send({
             username: admin.username,
             password: admin.password
@@ -41,13 +44,12 @@ function loginOneUser(userType) {
           })
       case "agent":
         chai.request(app)
-          .post("/api/users/auth")
+          .post(loginEndpoint)
           .send({
             username: agent.username,
             password: agent.password
           })
           .end((err, res) => {
-            console.log("did this even fire you motherfucker")
             // at this point the response from the server should be a user_id and a token
             if (err) {
               console.log("failed to login user from helper");
@@ -57,7 +59,7 @@ function loginOneUser(userType) {
           })
       case "manager":
         chai.request(app)
-          .post("/api/users/auth")
+          .post(loginEndpoint)
           .send({
             username: manager.username,
             password: manager.password
@@ -72,7 +74,7 @@ function loginOneUser(userType) {
           })
       case "operator":
         chai.request(app)
-          .post("/api/users/auth")
+          .post(loginEndpoint)
           .send({
             username: operator.username,
             password: operator.password
@@ -90,27 +92,4 @@ function loginOneUser(userType) {
     }
   })
 }
-
-function loginOneUser2() {
-  console.log("did this execute?")
-  return new Promise((resolve, reject) => {
-  console.log("did this execute?2")
-    chai.request(app)
-      .post("/api/users/auth")
-      .send({
-        username: agent.username,
-        password: agent.password
-      })
-      .end((err, res) => {
-        console.log("did this even fire you motherfucker")
-        // at this point the response from the server should be a user_id and a token
-        if (err) {
-          console.log("failed to login user from helper");
-          reject(err);
-        }
-        resolve(res.body);
-      })
-  })
-}
-
-module.exports = loginOneUser2
+module.exports = loginOneUser
