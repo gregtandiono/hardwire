@@ -20,7 +20,7 @@ var app                  = require("../../server")
 
 
 describe("Users", () => {
-  it("should be able to signup a new user", done => {
+  it("should allow an agent to be able to create an operator", done => {
     loginOneUser("agent").should.be.fulfilled
       .then(agentInfo => {
         var agentID = agentInfo.data.user_id;
@@ -29,6 +29,22 @@ describe("Users", () => {
           .post(`/api/users/signup/${agentID}`)
           .set("Authorization", token)
           .send(nonSuperUserFixtures.validOperatorInput)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            done();
+          })
+      })
+  });
+
+  it("should allow an agent to be able to create a manager", done => {
+    loginOneUser("agent").should.be.fulfilled
+      .then(agentInfo => {
+        var agentID = agentInfo.data.user_id;
+        var token = agentInfo.data.token;
+        chai.request(app)
+          .post(`/api/users/signup/${agentID}`)
+          .set("Authorization", token)
+          .send(nonSuperUserFixtures.validManagerInput)
           .end((err, res) => {
             expect(res.status).to.equal(200);
             done();
