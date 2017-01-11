@@ -7,7 +7,7 @@
 var express          = require("express")
   , _                = require("underscore")
   , Promise          = require("bluebird")
-  , Post             = require("../models/Player")
+  , Player           = require("../models/Player")
   , Bank             = require("../models/Bank")
   , router           = express.Router()
 
@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
       // after creating the player
       // the promise should resolve the player_id to be injected to the
       // bank req body
-      var filteredBankReqBody = _.extend({}, bankReqBody, {
+      var filteredBankReqBody = _.extend({}, bankReqBody.banks, {
         player_id: playerID,
         operator_id: req.body.operator_id
       });
