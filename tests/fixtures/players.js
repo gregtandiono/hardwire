@@ -11,6 +11,7 @@ module.exports = {
     name: "abeng the gambler",
     cellphone: "08182739981",
     ym: "abengLovesAboy",
+    email: "abeng@aboy.com",
     banks: {
       id: "e96477b8-ef0e-4771-891d-ffb97f5f7fa6",
       name: "bca",
@@ -19,6 +20,7 @@ module.exports = {
       account_holder: "agent abeng asong",
       account_number: "891230829830",
       username: "bengbengbengmaria",
+      system_ownership: "player",
       password: "378272"
     }
   },
