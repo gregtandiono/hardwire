@@ -9,7 +9,7 @@ var Promise        = require("bluebird")
   , faker          = require("faker")
   , app            = require("../server")
   , pg             = require("../api/adapters/db")
-  
+
 // LOAD FIXTURES
 var setUserFixtures = require("./fixtures/users");
 
@@ -17,7 +17,8 @@ var setUserFixtures = require("./fixtures/users");
 var User         = require("../api/models/User");
 var loginOneUser = require("./helpers/loginOneUser");
 
-var tables = ["banks", "users", "players", "games", "sites", "transactions"];
+// var tables = ["banks", "users", "players", "games", "sites", "transactions"];
+var tables = ["players", "banks", "users", "games", "sites", "transactions"];
 
 
 // =============================
