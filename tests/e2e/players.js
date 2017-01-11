@@ -18,71 +18,21 @@ var app            = require("../../server")
   , loginOneUser   = require("../helpers/loginOneUser")
   , playerFixtures = require("../fixtures/players")
 
-describe("Users", () => {
-  it("should allow an agent to be able to create an operator", done => {
-    loginOneUser("agent").should.be.fulfilled
-      .then(agentInfo => {
-        var agentID = agentInfo.data.user_id;
-        var token = agentInfo.data.token;
-        chai.request(app)
-          .post(`/api/users/signup/${agentID}`)
-          .set("Authorization", token)
-          .send(nonSuperUserFixtures.validOperatorInput)
-          .end((err, res) => {
-            expect(res.status).to.equal(200);
-            done();
-          })
-      })
-  });
-
-  it("should allow an agent to be able to create a manager", done => {
-    loginOneUser("agent").should.be.fulfilled
-      .then(agentInfo => {
-        var agentID = agentInfo.data.user_id;
-        var token = agentInfo.data.token;
-        chai.request(app)
-          .post(`/api/users/signup/${agentID}`)
-          .set("Authorization", token)
-          .send(nonSuperUserFixtures.validManagerInput)
-          .end((err, res) => {
-            expect(res.status).to.equal(200);
-            done();
-          })
-      })
-  });
-
-  it("should not allow operators to create users", done => {
+describe("Players", () => {
+  it("should allow operators to create players", done => {
     loginOneUser("operator").should.be.fulfilled
       .then(operatorInfo => {
-        var agentID = operatorInfo.data.user_id;
+        var operatorID = operatorInfo.data.user_id;
         var token = operatorInfo.data.token;
         chai.request(app)
-          .post(`/api/users/signup/${agentID}`)
+          .post(`/api/players/`)
           .set("Authorization", token)
-          .send(nonSuperUserFixtures.validOperatorInput)
+          .send(playerFixtures.validPlayerInput)
           .end((err, res) => {
-            expect(res.status).to.equal(400);
-            expect(res.body).to.include.keys("error");
-            expect(res.body.error).to.equal("user has no privilege to create users");
+            if (err) console.log(err)
+            expect(res.status).to.equal(200);
             done();
           })
       })
   });
-
-  it("should invalidate bad data input", done => {
-    loginOneUser("agent").should.be.fulfilled
-      .then(agentInfo => {
-        var agentID = agentInfo.data.user_id;
-        var token = agentInfo.data.token;
-        chai.request(app)
-          .post(`/api/users/signup/${agentID}`)
-          .set("Authorization", token)
-          .send(nonSuperUserFixtures.invalidOperatorInput)
-          .end((err, res) => {
-            expect(res.status).to.equal(400);
-            done();
-          })
-      })
-  });
-
 })
