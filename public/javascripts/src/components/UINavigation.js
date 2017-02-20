@@ -8,7 +8,8 @@ import { Link } from "react-router";
 
 const navigationItems = [
   { url: "/dashboard", name: "Dashboard" },
-  { url: "/posts/new", name: "Create new post +" }
+  { url: "/players", name: "Players" },
+  { url: "/transactions", name: "Transactions" }
 ];
 
 const NavigationItem = ({ url, name }) => (
