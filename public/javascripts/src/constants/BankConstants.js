@@ -4,10 +4,6 @@
  * [CONSTANT]
  */
 
-export const USER_LOGIN = "USER_LOGIN";
-export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
-export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
-
 // Fetch all banks related to player
 
 export const FETCH_ALL_BANKS = "FETCH_ALL_BANKS"
