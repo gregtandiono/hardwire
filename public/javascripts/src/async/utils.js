@@ -4,11 +4,6 @@
  * [ASYNC]
  */
 
-/**
- * utils.js
- *
- * [ASYNC]
- */
 
 import fetch from "isomorphic-fetch";
 import Cookies from "cookies-js";
