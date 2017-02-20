@@ -39,6 +39,7 @@ class User extends BaseModel {
     return new Promise((resolve, reject) => {
       self._permissionChecker(userID)
         .then(userType => {
+          console.log("USER TYPE", userType);
           if (userType == "admin" || userType == "agent") {
             
             self._validate(data)

@@ -15,7 +15,10 @@ router.post('/signup/:user_id', (req, res) => { // this is to create operators /
   var userID = req.params.user_id
   user.signup(req.body, userID)
     .then(results => { res.status(200).json({ data: results }) })
-    .catch(err => { res.status(400).json({ error: err }) })
+    .catch(err => { 
+      console.log("FUCK", err);
+      res.status(400).json({ error: err }) 
+    })
 });
 
 router.post('/auth', (req, res) => {

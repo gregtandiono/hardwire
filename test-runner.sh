@@ -1,1 +1,1 @@
-NODE_ENV=test mocha --require ./tests/global-test-config.js ./tests/**/* --recursive
+npm run seed && NODE_ENV=test mocha --require ./tests/global-test-config.js ./tests/**/* --recursive

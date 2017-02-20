@@ -42,6 +42,7 @@ function loginOneUser(userType) {
             }
             resolve(res.body);
           })
+      break;
       case "agent":
         chai.request(app)
           .post(loginEndpoint)
@@ -57,6 +58,7 @@ function loginOneUser(userType) {
             }
             resolve(res.body);
           })
+      break;
       case "manager":
         chai.request(app)
           .post(loginEndpoint)
@@ -72,6 +74,7 @@ function loginOneUser(userType) {
             }
             resolve(res.body);
           })
+      break;
       case "operator":
         chai.request(app)
           .post(loginEndpoint)
@@ -87,6 +90,7 @@ function loginOneUser(userType) {
             }
             resolve(res.body);
           })
+      break;
       default:
       // no op
     }
