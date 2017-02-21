@@ -40,7 +40,7 @@ export function fetchAllBanksAsync() {
     }
 }
 
-export function updateBankOptimistically(updatedBankList) {
+export function updateBankListOptimistically(updatedBankList) {
     return (dispatch) => {
         dispatch(genericActionHandler(types.UPDATE_BANK_LIST))
         return dispatch(genericActionHandler(types.FETCH_ALL_BANKS_SUCCESS, { data: updatedBankList }))

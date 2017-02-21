@@ -40,7 +40,7 @@ export function fetchAllSitesAsync() {
     }
 }
 
-export function updateSiteAsync(updatedSiteList) {
+export function updateSiteListOptimistically(updatedSiteList) {
     return (dispatch) => {
         dispatch(genericActionHandler(types.UPDATE_SITE_LIST))
         return dispatch(genericActionHandler(types.FETCH_ALL_SITES_SUCCESS, { data: updatedSiteList }))
