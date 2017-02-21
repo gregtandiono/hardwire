@@ -24,7 +24,7 @@ export function fetchAllPlayers(state = {
             error: false,
             players: action.response.data
           })
-        case types.FETCH_ALL_PLAYERS.FAIL:
+        case types.FETCH_ALL_PLAYERS_FAIL:
           let { error } = action.response;
           return Object.assign({}, state, {
             loading: false,
