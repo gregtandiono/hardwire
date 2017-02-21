@@ -47,7 +47,7 @@ app.use(express.static("public"));
 
 // APPLY ENDPOINTS
 app.use(baseApiURL + "/login", login);
-app.use(baseApiURL + "/users", auth, users);
+app.use(baseApiURL + "/users", users);
 app.use(baseApiURL + "/players", auth, players);
 app.use(baseApiURL + "/games", auth, games);
 app.use(baseApiURL + "/sites", auth, sites);

@@ -32,10 +32,7 @@ class App extends Component {
   componentDidMount() {
     if (!fetchToken().token && !fetchToken().user_id) {
       this.context.router.replace("/login")
-    } else {
-      var userID = fetchToken().user_id;
-      store.dispatch(fetchUserInfoAsync(userID));
-    }
+    }   
   }
   render() {
     return (

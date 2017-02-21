@@ -19,8 +19,8 @@ export default class UILoginFormView extends UILoginFormController {
     let { loginUserAsync } = this.props.actions;
     return (
       <main className="pre-app">
-        <h1>Micro Medium Login</h1>
-        <form onSubmit={this._submitHandler.bind(this, "/api/users/auth", loginUserAsync)}>
+        <h1>Hardwire Operator Login</h1>
+        <form onSubmit={this._submitHandler.bind(this, "/users/auth", loginUserAsync)}>
           {this._renderInputs(inputs)}
           {this._renderButton()}
         </form>

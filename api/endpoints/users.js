@@ -22,6 +22,7 @@ router.post('/signup/:user_id', (req, res) => { // this is to create operators /
 });
 
 router.post('/auth', (req, res) => {
+  console.log("it's in the request body", req.body);
   const user = new User();
   user.login(req.body)
     .then(results => { res.status(200).json({ data: results }) })
