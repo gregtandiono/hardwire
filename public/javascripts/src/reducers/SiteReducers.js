@@ -24,7 +24,7 @@ export function fetchAllSites(state = {
             error: false,
             sites: action.response.data
           })
-        case types.FETCH_ALL_SITES.FAIL:
+        case types.FETCH_ALL_SITES_FAIL:
           let { error } = action.response;
           return Object.assign({}, state, {
             loading: false,
