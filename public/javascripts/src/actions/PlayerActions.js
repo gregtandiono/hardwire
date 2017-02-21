@@ -18,7 +18,7 @@ export function createPlayerAsync(inputData) {
         owner_id: fetchToken().user_id
     });
     return (dispatch) => {
-        dispatch(genericHandler(types.CREATE_SITE))
+        dispatch(genericActionHandler(types.CREATE_SITE))
         var mappedRecord = mapRecord(PlayerRecord, inputDataWithUUID);
         return fetchHelper("post", "/players/", mappedRecord)
           .then(response => dispatch(genericActionHandler(types.CREATE_PLAYER_SUCCESS, response, mappedRecord)))

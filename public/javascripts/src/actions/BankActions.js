@@ -18,7 +18,7 @@ export function createBankAsync(inputData) {
         owner_id: fetchToken().user_id
     });
     return (dispatch) => {
-        dispatch(genericHandler(types.CREATE_BANK))
+        dispatch(genericActionHandler(types.CREATE_BANK))
         var mappedRecord = mapRecord(BankRecord, inputDataWithUUID);
         return fetchHelper("post", "/banks/", mappedRecord)
           .then(response => dispatch(genericActionHandler(types.CREATE_BANK_SUCCESS, response, mappedRecord)))
