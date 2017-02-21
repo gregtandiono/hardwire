@@ -19,10 +19,10 @@ export function createPlayerAsync(inputData) {
     });
     return (dispatch) => {
         dispatch(genericHandler(types.CREATE_SITE))
-        var mappedRecord = mapRecord(SiteRecord, inputDataWithUUID);
-        return fetchHelper("post", "/sites/", mappedRecord)
-          .then(response => dispatch(genericActionHandler(types.CREATE_SITE_SUCCESS, response, mappedRecord)))
-          .catch(reason => dispatch(genericActionHandler(types.CREATE_SITE_FAIL, reason)))
+        var mappedRecord = mapRecord(PlayerRecord, inputDataWithUUID);
+        return fetchHelper("post", "/players/", mappedRecord)
+          .then(response => dispatch(genericActionHandler(types.CREATE_PLAYER_SUCCESS, response, mappedRecord)))
+          .catch(reason => dispatch(genericActionHandler(types.CREATE_PLAYER_FAIL, reason)))
     }
 }
 
@@ -49,18 +49,28 @@ export function updatePlayerListOptimistically(updatedPlayerList) {
 
 export function fetchOnePlayerAsync(playerID) {
     return (dispatch) => {
-        dispatch(genericActionHandler(types.FETCH_ALL_PLAYERS))
-        return fetchHelper("get", "/players/")
-          .then(response => dispatch(genericActionHandler(types.FETCH_ALL_PLAYERS_SUCCESS, response)))
-          .catch(reason => dispatch(genericActionHandler(types.FETCH_ALL_PLAYERS_FAIL, reason)))
+        dispatch(genericActionHandler(types.FETCH_ONE_PLAYER))
+        return fetchHelper("get", `/players/${playerID}`)
+          .then(response => dispatch(genericActionHandler(types.FETCH_ONE_PLAYER_SUCCESS, response)))
+          .catch(reason => dispatch(genericActionHandler(types.FETCH_ONE_PLAYER_FAIL, reason)))
     }
 
 }
 
 export function updatePlayerAsync(playerID) {
-
+    return (dispatch) => {
+        dispatch(genericActionHandler(types.UPDATE_PLAYER))
+        return fetchHelper("put", `/players/${playerID}`)
+            .then(response => dispatch(genericActionHandler(types.UPDATE_PLAYER_SUCCESS, response)))
+            .catch(reason => dispatch(genericActionHandler(types.UPDATE_PLAYER_FAIL, reason)))
+    }
 }
 
 export function deletePlayerAsync(playerID) {
-
+    return (dispatch) => {
+        dispatch(genericActionHandler(types.DELETE_PLAYER))
+        return fetchHelper("delete", `players/${playerID}`)
+            .then(response => dispatch(genericActionHandler(types.DELETE_PLAYER_SUCCESS, response)))
+            .catch(reason => dispatch(genericActionHandler(types.DELETE_PLAYER_FAIL, reason)))
+    }
 }
