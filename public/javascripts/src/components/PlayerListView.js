@@ -14,12 +14,7 @@ export default class PlayerListView extends Component {
         return (
             <div>
                 <h2>Player List</h2>
-                <UITableView
-                    headerHeight={50}
-                    rowHeight={10}
-                    rowsCount={fakeData.length}
-                    width={1000}
-                    height={200} />
+                <UITableView />
             </div>
         )
     }

@@ -20,6 +20,7 @@ import { Table, Column, Cell } from "fixed-data-table"
     }
 }*/
 
+
 export default class UITableView extends Component {
     render() {
         return (
@@ -33,15 +34,22 @@ export default class UITableView extends Component {
                 </thead>
                 <tbody>
                     <tr>
-
+                        <td>Gregory</td>
+                        <td>27</td>
+                        <td>gregtandiono</td>
                     </tr>
                 </tbody>
             </table>
         )
     }
 
-    generateHeaders() {
-
+    generateHeaders(e) {
+        e.preventDefault();
+        if (this.props.headers && this.props.headers.length > 0) {
+            this.props.headers.map((item, index) => {
+                
+            })
+        }
     }
 
     generateBody() {
