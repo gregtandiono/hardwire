@@ -14,7 +14,9 @@ export default class PlayerListView extends Component {
         return (
             <div>
                 <h2>Player List</h2>
-                <UITableView />
+                <UITableView
+                    headers={["name", "age", "username"]}
+                    body={fakeData} />
             </div>
         )
     }

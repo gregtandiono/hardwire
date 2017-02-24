@@ -27,33 +27,37 @@ export default class UITableView extends Component {
             <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Username</th>
+                        {this._generateHeaders()}
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Gregory</td>
-                        <td>27</td>
-                        <td>gregtandiono</td>
-                    </tr>
+                    {this._generateBody()}
                 </tbody>
             </table>
         )
     }
 
-    generateHeaders(e) {
-        e.preventDefault();
+    _generateHeaders() {
         if (this.props.headers && this.props.headers.length > 0) {
-            this.props.headers.map((item, index) => {
-                
+            return this.props.headers.map((item, index) => {
+                return <th key={`$-${item}-${index}`}>{item}</th>
             })
         }
     }
 
-    generateBody() {
-
+    _generateBody() {
+        if (this.props.body && this.props.body.length > 0) {
+            return this.props.body.map((row, index) => {
+                return (
+                    <tr key={`$-${index}`}>
+                        {Object.values(row) && Object.values(row).length > 0 ? 
+                            Object.values(row).map((value, index) => {
+                                return <td key={`$-${value}-${index}`}>{value}</td>
+                            }) : null}
+                    </tr>
+                )
+            })
+        }
     }
 }
 
