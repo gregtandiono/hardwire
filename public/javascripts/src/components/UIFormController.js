@@ -60,7 +60,7 @@ export default class UIFormController extends Component {
     return payload;
   }
 
-  _submitHandler(action: Function, e) {
+  _submitHandler(action, e) {
     e.preventDefault();
     var payload = this._payloadMapper();
 
@@ -71,7 +71,7 @@ export default class UIFormController extends Component {
   }
 
   // This is to handle 2 level deep submission of second level records
-  _deepSubmitHandler(associativeRecordID: string, action: Function, e) {
+  _deepSubmitHandler(associativeRecordID, action, e) {
     e.preventDefault();
     var payload = this._payloadMapper();
     if (this.props.dispatch && action) {
