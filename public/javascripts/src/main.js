@@ -1,3 +1,9 @@
+/**
+ * main.js
+ * 
+ * main entry file for the client-side javascript
+ */
+
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
 import {
@@ -27,6 +33,7 @@ import store from "./store/index"
 // CONTAINERS / VIEWS
 import UINavigation from "./components/UINavigation"
 import LoginContainer from "./containers/LoginContainer"
+import PlayerListView from "./components/PlayerListView"
 
 class App extends Component {
   componentDidMount() {
@@ -58,7 +65,9 @@ ReactDOM.render((
   <Provider store={store}>
     <Router history={history}>
         <Route path="login" component={LoginContainer} />
-        <Route path="/" component={App} />
+        <Route path="/" component={App}>
+          <Route path="/players" component={PlayerListView} />
+        </Route>
     </Router>
   </Provider>
 ), mountNode)
