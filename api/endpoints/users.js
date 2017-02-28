@@ -8,6 +8,7 @@ var express          = require("express")
   , _                = require("underscore")
   , Promise          = require("bluebird")
   , User             = require("../models/User")
+  , Shift            = require("../models/Shift")
   , router           = express.Router()
 
 router.post('/signup/:user_id', (req, res) => { // this is to create operators / managers
@@ -16,7 +17,6 @@ router.post('/signup/:user_id', (req, res) => { // this is to create operators /
   user.signup(req.body, userID)
     .then(results => { res.status(200).json({ data: results }) })
     .catch(err => { 
-      console.log("FUCK", err);
       res.status(400).json({ error: err }) 
     })
 });

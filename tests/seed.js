@@ -17,7 +17,6 @@ var setUserFixtures = require("./fixtures/users");
 var User         = require("../api/models/User");
 var loginOneUser = require("./helpers/loginOneUser");
 
-// var tables = ["banks", "users", "players", "games", "sites", "transactions"];
 var tables = ["banks", "players", "users", "games", "sites", "transactions", "shifts"];
 
 

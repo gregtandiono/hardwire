@@ -11,6 +11,7 @@ var Promise       = require("bluebird")
   , pg            = require("../adapters/db")
   , BaseModel     = require("./BaseModel")
   , secret        = require("../helpers/secret")
+  , uuid          = require("node-uuid")
   , hash          = require("../helpers/hash");
 
 /**
@@ -134,6 +135,19 @@ class User extends BaseModel {
         .where({ username: username, deleted_at: null })
         .then(rows => { resolve(rows) })
         .catch(lookupErr => { reject(`Error during user lookup \n ${lookupErr}`) });
+    })
+  }
+
+  _registerShift(userID) {
+    var self = this;
+    return new Promise((resolve, reject) => {
+      if (!userID) reject("no operator ID found in the argument");
+      pg
+        .returning("id")
+        .insert({ operator_id: userID })
+        .into("shifts")
+        .then(() => { resolve() })
+        .catch(shiftRegistrationError => { reject(shiftRegistrationError) })
     })
   }
 
