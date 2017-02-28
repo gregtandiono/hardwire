@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS banks CASCADE;
 DROP TABLE IF EXISTS games CASCADE;
 DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS sites CASCADE;
+DROP TABLE IF EXISTS shifts CASCADE;
 
 DROP TRIGGER IF EXISTS update_modified_column ON users;
 DROP TRIGGER IF EXISTS update_modified_column ON players;
@@ -41,7 +42,7 @@ CREATE TABLE IF NOT EXISTS users(
   type user_types NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  deleted_at TIMESTAMP WITH TIME ZONE
+  deleted_at TIMESTAMP WITH TIME ZONE,
 );
 
 CREATE TRIGGER update_modified_column
@@ -50,15 +51,9 @@ BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 -- Player Table
 CREATE TABLE IF NOT EXISTS players(
   id UUID PRIMARY KEY NOT NULL,
+  shift_id UUID,
   name varchar(255) NOT NULL,
   cellphone varchar(255),
-  -- account_bca varchar(255),
-  -- account_mandiri varchar(255),
-  -- account_other varchar(255),
-  -- account_bca_holder varchar(255),
-  -- account_mandiri_holder varchar(255),
-  -- account_other_holder varchar(255),
-  -- account_other_name varchar(255),
   ym varchar(255),
   email varchar(255),
   notes varchar(255),
@@ -66,7 +61,8 @@ CREATE TABLE IF NOT EXISTS players(
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   deleted_at TIMESTAMP WITH TIME ZONE,
-  FOREIGN KEY (operator_id) REFERENCES users (id)
+  FOREIGN KEY (operator_id) REFERENCES users (id),
+  FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
 
 CREATE TRIGGER update_modified_column
@@ -75,6 +71,7 @@ BEFORE UPDATE ON players FOR EACH ROW EXECUTE PROCEDURE update_modified_column()
 -- Banks Table
 CREATE TABLE IF NOT EXISTS banks(
   id UUID PRIMARY KEY NOT NULL,
+  shift_id UUID,
   name bank_types,
   player_id UUID NOT NULL,
   other_name varchar(255),
@@ -86,7 +83,8 @@ CREATE TABLE IF NOT EXISTS banks(
   system_ownership system_ownership_types NOT NULL,
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   FOREIGN KEY (operator_id) REFERENCES users (id),
-  FOREIGN KEY (player_id) REFERENCES players (id)
+  FOREIGN KEY (player_id) REFERENCES players (id),
+  FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
 
 CREATE TRIGGER update_modified_column
@@ -95,6 +93,7 @@ BEFORE UPDATE ON banks FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 -- Games Table
 CREATE TABLE IF NOT EXISTS games(
   id UUID PRIMARY KEY NOT NULL,
+  shift_id UUID,
   name varchar(255) NOT NULL,
   player_id UUID NOT NULL,
   operator_id UUID NOT NULL,
@@ -108,7 +107,8 @@ CREATE TABLE IF NOT EXISTS games(
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   deleted_at TIMESTAMP WITH TIME ZONE,
   FOREIGN KEY (player_id) REFERENCES players (id),
-  FOREIGN KEY (operator_id) REFERENCES users (id)
+  FOREIGN KEY (operator_id) REFERENCES users (id),
+  FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
 
 CREATE TRIGGER update_modified_column
@@ -118,12 +118,14 @@ BEFORE UPDATE ON games FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 -- Site Table
 CREATE TABLE IF NOT EXISTS sites(
   id UUID PRIMARY KEY NOT NULL,
+  shift_id UUID,
   url varchar(255),
   name varchar(100),
   operator_id UUID,
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  FOREIGN KEY (operator_id) REFERENCES users (id)
+  FOREIGN KEY (operator_id) REFERENCES users (id),
+  FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
 
 CREATE TRIGGER update_modified_column
@@ -133,6 +135,7 @@ BEFORE UPDATE ON sites FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 -- Transactions Table
 CREATE TABLE IF NOT EXISTS transactions(
   id UUID PRIMARY KEY NOT NULL,
+  shift_id UUID,
   name varchar(255) NOT NULL,
   player_id UUID NOT NULL,
   site_id UUID NOT NULL,
@@ -151,8 +154,17 @@ CREATE TABLE IF NOT EXISTS transactions(
   FOREIGN KEY (player_id) REFERENCES players (id),
   FOREIGN KEY (site_id) REFERENCES sites (id),
   FOREIGN KEY (operator_id) REFERENCES users (id),
-  FOREIGN KEY (bank_id) REFERENCES banks (id)
+  FOREIGN KEY (bank_id) REFERENCES banks (id),
+  FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
 
 CREATE TRIGGER update_modified_column
 BEFORE UPDATE ON transactions FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+CREATE TABLE IF NOT EXISTS shifts(
+  id UUID PRIMARY KEY NOT NULL,
+  operator_id UUID NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  FOREIGN KEY (operator_id) REFERENCES users (id)
+);
