@@ -109,10 +109,12 @@ class User extends BaseModel {
 
                 if (bcrypt.compareSync(filteredData.password, hashFromDB)) {
                   self._registerShift(userIDFromDB)
-                    .then(() => {
+                    .then((shift_id) => {
                       self._generateToken(lookupResult[0])
                         .then(result => { 
-                          resolve(result) 
+                          var resultWithShiftID = Object.assign({}, result, shift_id)
+                          console.log(resultWithShiftID);
+                          resolve(resultWithShiftID) 
                         })
                         .catch(tokenGeneratorErr => { reject(tokenGeneratorErr) })
                     })
@@ -154,7 +156,7 @@ class User extends BaseModel {
         .returning("id")
         .insert({ operator_id: userID, id: uuid.v4() })
         .into("shifts")
-        .then(() => { resolve() })
+        .then((shiftID) => { resolve(shiftID[0]) })
         .catch(shiftRegistrationError => { reject(shiftRegistrationError) })
     })
   }
