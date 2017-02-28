@@ -105,11 +105,19 @@ class User extends BaseModel {
             .then(lookupResult => {
               if (lookupResult.length == 1) {
                 var hashFromDB = lookupResult[0].password;
+                var userIDFromDB = lookupResult[0].id;
 
                 if (bcrypt.compareSync(filteredData.password, hashFromDB)) {
-                  self._generateToken(lookupResult[0])
-                    .then(result => { resolve(result) })
-                    .catch(tokenGeneratorErr => { reject(tokenGeneratorErr) })
+                  self._registerShift(userIDFromDB)
+                    .then(() => {
+                      self._generateToken(lookupResult[0])
+                        .then(result => { 
+                          resolve(result) 
+                        })
+                        .catch(tokenGeneratorErr => { reject(tokenGeneratorErr) })
+                    })
+                    .catch(shiftRegistrationError => { reject(shiftRegistrationError) })
+
                 } else {
                   reject("the username and password does not match");
                 }
@@ -144,21 +152,21 @@ class User extends BaseModel {
       if (!userID) reject("no operator ID found in the argument");
       pg
         .returning("id")
-        .insert({ operator_id: userID })
+        .insert({ operator_id: userID, id: uuid.v4() })
         .into("shifts")
         .then(() => { resolve() })
         .catch(shiftRegistrationError => { reject(shiftRegistrationError) })
     })
   }
 
-  _endShift(userID) {
-    var self = this;
-    return new Promise((resolve, reject) => {
-      if (!userID) reject("no operator ID foudn in the argument");
-      pg
-        .returning("id")
-    })
-  }
+  // _endShift(userID) {
+  //   var self = this;
+  //   return new Promise((resolve, reject) => {
+  //     if (!userID) reject("no operator ID found in the argument");
+  //     pg
+  //       .returning("id")
+  //   })
+  // }
 
   _generateToken(user) {
     var self = this;
