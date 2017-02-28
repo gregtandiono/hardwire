@@ -42,11 +42,20 @@ CREATE TABLE IF NOT EXISTS users(
   type user_types NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  deleted_at TIMESTAMP WITH TIME ZONE,
+  deleted_at TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TRIGGER update_modified_column
 BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
+-- Shift Table
+CREATE TABLE IF NOT EXISTS shifts(
+  id UUID PRIMARY KEY NOT NULL,
+  operator_id UUID NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  ends_at TIMESTAMP WITH TIME ZONE,
+  FOREIGN KEY (operator_id) REFERENCES users (id)
+);
 
 -- Player Table
 CREATE TABLE IF NOT EXISTS players(
@@ -160,11 +169,3 @@ CREATE TABLE IF NOT EXISTS transactions(
 
 CREATE TRIGGER update_modified_column
 BEFORE UPDATE ON transactions FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
-
-CREATE TABLE IF NOT EXISTS shifts(
-  id UUID PRIMARY KEY NOT NULL,
-  operator_id UUID NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  ends_at TIMESTAMP WITH TIME ZONE,
-  FOREIGN KEY (operator_id) REFERENCES users (id)
-);

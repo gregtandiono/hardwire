@@ -151,6 +151,15 @@ class User extends BaseModel {
     })
   }
 
+  _endShift(userID) {
+    var self = this;
+    return new Promise((resolve, reject) => {
+      if (!userID) reject("no operator ID foudn in the argument");
+      pg
+        .returning("id")
+    })
+  }
+
   _generateToken(user) {
     var self = this;
     return new Promise((resolve, reject) => {
