@@ -96,4 +96,5 @@ function loginOneUser(userType) {
     }
   })
 }
-module.exports = loginOneUser
+
+module.exports = loginOneUser;
