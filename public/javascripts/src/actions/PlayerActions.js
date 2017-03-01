@@ -20,6 +20,18 @@ export function createPlayerAsync(inputData) {
     return (dispatch) => {
         dispatch(genericActionHandler(types.CREATE_SITE))
         var mappedRecord = mapRecord(PlayerRecord, inputDataWithUUID);
+        var mappedRecordWithBankObject = Object.assign({}, mappedRecord, {
+            bank: {
+                id: generateUUID(),
+                name: mappedRecord.bank_name,
+                other_name: mappedRecord.bank_other_name,
+                account_holder: mappedRecord.bank_account_holder,
+                account_number: mappedRecord.bank_account_number,
+                system_ownership: "player",
+                username: mappedRecord.bank_username,
+                password: mappedRecord.bank_password
+            }     
+        })
         return fetchHelper("post", "/players/", mappedRecord)
           .then(response => dispatch(genericActionHandler(types.CREATE_PLAYER_SUCCESS, response, mappedRecord)))
           .catch(reason => dispatch(genericActionHandler(types.CREATE_PLAYER_FAIL, reason)))

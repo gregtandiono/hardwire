@@ -8,7 +8,7 @@
 import React, {Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import PLayerListView from "../components/PlayerListView";
+import PlayerListView from "../components/PlayerListView";
 
 function mapStateToProps(state) {
   var { fetchAllPlayers } = state;

@@ -14,7 +14,6 @@ function mapStateToProps(state) {
   var { createPlayer } = state;
   var { loading, error, postSuccess, players } = createPlayer;
   return { error, postSuccess, loading, players }
-
 }
 
 PlayerFormView.contextTypes = { // this context type is to grant access to the react router object for redirection

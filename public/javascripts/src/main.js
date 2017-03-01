@@ -33,7 +33,9 @@ import store from "./store/index"
 // CONTAINERS / VIEWS
 import UINavigation from "./components/UINavigation"
 import LoginContainer from "./containers/LoginContainer"
-import PlayerListView from "./components/PlayerListView"
+import PlayerListContainer from "./containers/PlayerListContainer"
+import PlayerFormContainer from "./containers/PlayerFormContainer"
+// import PlayerListView from "./components/PlayerListView"
 
 class App extends Component {
   componentDidMount() {
@@ -66,7 +68,9 @@ ReactDOM.render((
     <Router history={history}>
         <Route path="login" component={LoginContainer} />
         <Route path="/" component={App}>
-          <Route path="/players" component={PlayerListView} />
+          <Route path="players" component={PlayerListContainer}>
+            <Route path="new" component={PlayerFormContainer} />
+          </Route>
         </Route>
     </Router>
   </Provider>

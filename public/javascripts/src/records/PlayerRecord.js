@@ -15,6 +15,13 @@ type Player = {
   email: string;
   notes: string;
   operator_id: string;
+  bank_name: string;
+  bank_other_name: string;
+  bank_account_holder: string;
+  bank_account_number: string;
+  bank_system_ownership: string;
+  bank_username: string;
+  bank_password: string;
 };
 
 const attribute: Player = {
@@ -24,7 +31,14 @@ const attribute: Player = {
   ym: "",
   email: "",
   notes: "",
-  operator_id: ""
+  operator_id: "",
+  bank_name: "",
+  bank_other_name: "",
+  bank_account_holder: "",
+  bank_account_number: "",
+  bank_system_ownership: "",
+  bank_username: "",
+  bank_password: "",
 };
 
 const PlayerRecord: ImmutableRecord = createImmutableRecord(attribute);
