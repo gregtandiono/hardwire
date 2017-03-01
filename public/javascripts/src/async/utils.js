@@ -24,7 +24,8 @@ export function fetchToken() {
   if (typeof Cookies == "function" && typeof Cookies.get == "function") {
     return {
       token: Cookies.get("token") ? Cookies.get("token") : "",
-      user_id: Cookies.get("user_id") ? Cookies.get("user_id") : ""
+      user_id: Cookies.get("user_id") ? Cookies.get("user_id") : "",
+      shift_id: Cookies.get("shift_id") ? Cookies.get("shift_id") : ""
     }
   } else {
     return ""

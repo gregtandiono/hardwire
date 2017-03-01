@@ -12,6 +12,7 @@ var Promise       = require("bluebird")
 var attributes = {
   id          : {value: "", type: "uuid", required: true},
   name        : {value: "", type: "string", required: true},
+  shift_id    : {value: "", type: "uuid", required: true},
   cellphone   : {value: "", type: "string"},
   ym          : {value: "", type: "string"},
   email       : {value: "", type: "email"},

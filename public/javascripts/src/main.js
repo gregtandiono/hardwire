@@ -68,9 +68,8 @@ ReactDOM.render((
     <Router history={history}>
         <Route path="login" component={LoginContainer} />
         <Route path="/" component={App}>
-          <Route path="players" component={PlayerListContainer}>
-            <Route path="new" component={PlayerFormContainer} />
-          </Route>
+          <Route path="players" component={PlayerListContainer} />
+          <Route path="players/new" component={PlayerFormContainer} />
         </Route>
     </Router>
   </Provider>

@@ -9,6 +9,7 @@ import type { ImmutableRecord } from "./utils";
 
 type Player = {
   id: string;
+  shift_id: string;
   name: string;
   cellphone: string;
   ym: string;
@@ -26,6 +27,7 @@ type Player = {
 
 const attribute: Player = {
   id: "",
+  shift_id: "",
   name: "",
   cellphone: "",
   ym: "",

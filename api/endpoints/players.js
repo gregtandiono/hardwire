@@ -14,7 +14,16 @@ var express          = require("express")
 router.post("/", (req, res) => {
   const player = new Player();
   const bank = new Bank();
-  var playerReqBody = _.omit(req.body, "banks");
+  var playerReqBody = _.omit(req.body, [
+    "banks",
+    "bank_account_holder",
+    "bank_other_name",
+    "bank_name",
+    "bank_account_number",
+    "bank_system_ownership",
+    "bank_username",
+    "bank_password"
+  ]);
   var bankReqBody = _.pick(req.body, "banks");
   player
     .create(playerReqBody)
@@ -32,7 +41,9 @@ router.post("/", (req, res) => {
         .then(results => { res.status(200).json({ data: results }) })
         .catch(err => { res.status(400).json({ error: err }) });
     })
-    .catch(err => { res.status(400).json({ error: err }) })
+    .catch(err => { 
+      res.status(400).json({ error: err }) 
+    })
 });
 
 router.get("/", (req, res) => {

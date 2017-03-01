@@ -16,12 +16,13 @@ export default class PlayerListView extends Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div>
                 <h2>Player List</h2>
                 <UITableView
                     headers={["name", "ym", "username"]}
-                    body={this.props.body} />
+                    body={this.props.players} />
             </div>
         )
     }

@@ -15,14 +15,16 @@ import genericActionHandler from "./genericActionHandler"
 export function createPlayerAsync(inputData) {
     var inputDataWithUUID = extend({}, inputData, {
         id: generateUUID(),
-        owner_id: fetchToken().user_id
+        operator_id: fetchToken().user_id,
+        shift_id: fetchToken().shift_id
     });
     return (dispatch) => {
-        dispatch(genericActionHandler(types.CREATE_SITE))
+        dispatch(genericActionHandler(types.CREATE_PLAYER))
         var mappedRecord = mapRecord(PlayerRecord, inputDataWithUUID);
         var mappedRecordWithBankObject = Object.assign({}, mappedRecord, {
-            bank: {
+            banks: {
                 id: generateUUID(),
+                shift_id: fetchToken().shift_id,
                 name: mappedRecord.bank_name,
                 other_name: mappedRecord.bank_other_name,
                 account_holder: mappedRecord.bank_account_holder,
@@ -32,8 +34,9 @@ export function createPlayerAsync(inputData) {
                 password: mappedRecord.bank_password
             }     
         })
-        return fetchHelper("post", "/players/", mappedRecord)
-          .then(response => dispatch(genericActionHandler(types.CREATE_PLAYER_SUCCESS, response, mappedRecord)))
+        console.log("final record", mappedRecordWithBankObject);
+        return fetchHelper("post", "/players/", mappedRecordWithBankObject)
+          .then(response => dispatch(genericActionHandler(types.CREATE_PLAYER_SUCCESS, response, mappedRecordWithBankObject)))
           .catch(reason => dispatch(genericActionHandler(types.CREATE_PLAYER_FAIL, reason)))
     }
 }
