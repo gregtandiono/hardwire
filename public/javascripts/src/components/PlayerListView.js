@@ -16,13 +16,13 @@ export default class PlayerListView extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 <h2>Player List</h2>
                 <UITableView
-                    headers={["name", "ym", "username"]}
-                    body={this.props.players} />
+                    headers={["name", "username", "ym"]}
+                    body={this.props.players}
+                    filters={["shift_id", "id", "created_at", "operator_id", "modified"]} />
             </div>
         )
     }

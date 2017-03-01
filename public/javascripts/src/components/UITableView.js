@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
+import * as _ from "underscore"
 import { Table, Column, Cell } from "fixed-data-table"
 
 export default class UITableView extends Component {
@@ -29,10 +30,12 @@ export default class UITableView extends Component {
     _generateBody() {
         if (this.props.body && this.props.body.length > 0) {
             return this.props.body.map((row, index) => {
+                console.log("ROW", row);
+                var filteredRow = _.omit(row, this.props.filters);
                 return (
                     <tr key={`$-${index}`}>
-                        {Object.values(row) && Object.values(row).length > 0 ? 
-                            Object.values(row).map((value, index) => {
+                        {Object.values(filteredRow) && Object.values(row).length > 0 ? 
+                            Object.values(filteredRow).map((value, index) => {
                                 return <td key={`$-${value}-${index}`}>{value}</td>
                             }) : null}
                     </tr>
