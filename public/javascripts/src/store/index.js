@@ -1,5 +1,5 @@
 /**
- * store.js
+ * store/index.js
  *
  * [STORE]
  * main application state tree
