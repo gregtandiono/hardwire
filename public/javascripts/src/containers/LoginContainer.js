@@ -29,7 +29,7 @@ class LoginContainer extends Component {
   }
 }
 
-function mapStateToProps(state: Object): Object {
+function mapStateToProps(state) {
   // @TODO: this is just for dev purposes
   // when we get the hang out of redux, we'll surely get rid of this
   let { loginReducer } = state;
