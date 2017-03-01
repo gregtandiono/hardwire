@@ -29,7 +29,7 @@ export default class GameFormView extends UIFormController {
     render() {
         return (
             <div>
-                <h2>Player Bank Details</h2>
+                <h2>Register new Game</h2>
                 <form onSubmit={this._submitHandler.bind(this, GameActions.createGameAsync)}>
                     {this._renderInputs(inputs)}
                     {this._renderButton()}
