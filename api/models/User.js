@@ -40,7 +40,7 @@ class User extends BaseModel {
     return new Promise((resolve, reject) => {
       self._permissionChecker(userID)
         .then(userType => {
-          console.log("USER TYPE", userType);
+          // console.log("USER TYPE", userType);
           if (userType == "admin" || userType == "agent") {
             
             self._validate(data)
@@ -106,14 +106,14 @@ class User extends BaseModel {
               if (lookupResult.length == 1) {
                 var hashFromDB = lookupResult[0].password;
                 var userIDFromDB = lookupResult[0].id;
-
                 if (bcrypt.compareSync(filteredData.password, hashFromDB)) {
                   self._registerShift(userIDFromDB)
                     .then((shift_id) => {
                       self._generateToken(lookupResult[0])
                         .then(result => { 
-                          var resultWithShiftID = Object.assign({}, result, shift_id)
-                          console.log(resultWithShiftID);
+                          var resultWithShiftID = Object.assign({}, result, {
+                            shift_id: shift_id
+                          })
                           resolve(resultWithShiftID) 
                         })
                         .catch(tokenGeneratorErr => { reject(tokenGeneratorErr) })
