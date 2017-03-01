@@ -18,6 +18,7 @@ class LoginContainer extends Component {
     if (nextProps.redirectURL && nextProps.response.data.token && !nextProps.error) {
       Cookies.set("token", nextProps.response.data.token);
       Cookies.set("user_id", nextProps.response.data.user_id);
+      Cookies.set("shift_id", nextProps.response.data.shift_id);
       this.context.router.push("/");
     }
   }
