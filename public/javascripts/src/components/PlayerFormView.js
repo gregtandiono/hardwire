@@ -20,7 +20,8 @@ const inputs = [
 export default class PlayerFormView extends UIFormController {
     componentWillReceiveProps(nextProps) {
         if (!nextProps.error && nextProps.postSuccess && !nextProps.loading) {
-            this.props.dispatch(PlayerActions.updatePlayerListOptimistically(nextProps.players))
+            this.props.dispatch(PlayerActions.updatePlayerListOptimistically(nextProps.players));
+            this.context.router.push("/players");
         }
     }
 
