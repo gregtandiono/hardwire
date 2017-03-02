@@ -16,6 +16,7 @@ export default class PlayerListView extends Component {
     }
 
     render() {
+        // test comment
         return (
             <div>
                 <h2>Player List</h2>
