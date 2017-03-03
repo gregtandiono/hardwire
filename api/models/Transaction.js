@@ -32,6 +32,27 @@ class Transaction extends BaseModel {
     this.attributes = attributes;
     this.table = "transactions";
   }
+
+  _deposit() {
+
+    /**
+     * @NOTE
+     * So we will have to connect this to the bank balance simulation
+     * && site balance simulation
+     * to increase value for every transaction
+     */
+  }
+
+  _withdrawal() {
+
+    /**
+     * @NOTE
+     * So we will have to connect this to the bank balance simulation
+     * && site balance simulation
+     * to decrease value for every transaction
+     */
+
+  }
 }
 
 module.exports = Transaction;

@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS bank_balance_simulation(
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
   FOREIGN KEY (bank_id) REFERENCES banks (id),
-  FOREIGN KEY (shift_id) REFERENCES shifts (id),
+  FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
 
 CREATE TRIGGER update_modified_column
