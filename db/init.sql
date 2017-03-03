@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS games CASCADE;
 DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS sites CASCADE;
 DROP TABLE IF EXISTS shifts CASCADE;
+DROP TABLE IS EXISTS bank_balance_simulation CASCADE;
+DROP TABLE IS EXISTS game_balance_simulation CASCADE;
 
 DROP TRIGGER IF EXISTS update_modified_column ON users;
 DROP TRIGGER IF EXISTS update_modified_column ON players;
@@ -14,6 +16,8 @@ DROP TRIGGER IF EXISTS update_modified_column ON banks;
 DROP TRIGGER IF EXISTS update_modified_column ON games;
 DROP TRIGGER IF EXISTS update_modified_column ON transactions;
 DROP TRIGGER IF EXISTS update_modified_column ON sites;
+DROP TRIGGER IF EXISTS update_modified_column ON bank_balance_simulation;
+DROP TRIGGER IF EXISTS update_modified_column ON game_balance_simulation;
 
 DROP TYPE IF EXISTS user_types;
 DROP TYPE IF EXISTS bank_types;
@@ -179,6 +183,7 @@ CREATE TABLE IF NOT EXISTS transactions(
   site_id UUID NOT NULL,
   game_id UUID NOT NULL,
   operator_id UUID NOT NULL,
+  shift_id UUID NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   reff varchar(255),

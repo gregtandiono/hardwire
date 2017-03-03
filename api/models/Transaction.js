@@ -19,6 +19,7 @@ var attributes = {
   site_id           : {value: "", type: "uuid", required: true},
   game_id           : {value: "", type: "uuid", required: true},
   bank_id           : {value: "", type: "uuid", required: true},
+  shift_id          : {value: "", type: "uuid", required: true},
   reff              : {value: "", type: "string"},
   transfer          : {value: "", type: "number"},
   deposit           : {value: "", type: "number"},
@@ -36,7 +37,7 @@ class Transaction extends BaseModel {
     this.table = "transactions";
   }
 
-  // method override
+  // create method override
 
   create(data) {
     var self = this;
