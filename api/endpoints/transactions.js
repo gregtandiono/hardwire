@@ -21,8 +21,11 @@ router.post("/", (req, res) => {
         game_id,
         req.body.withdraw ? req.body.withdraw : req.body.deposit,
         req.body.withdraw ? "withdraw" : "deposit"
-      )
-      res.status(200).json({ data: results }) 
+      ).then(() => {
+        res.status(200).json({ data: results }) 
+      }).catch(error => {
+        res.status(400).json({ error })
+      })
     })
     .catch(error => { res.status(400).json({ error }) })
 });

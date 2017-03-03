@@ -36,6 +36,25 @@ class Transaction extends BaseModel {
     this.table = "transactions";
   }
 
+  // method override
+
+  create(data) {
+    var self = this;
+    return new Promise((resolve, reject) => {
+      self._validate(data)
+        .then(filteredData => {
+          pg
+            .returning("id")
+            .insert(filteredData)
+            .into(self.table)
+            .then((recordID) => { resolve(recordID[0]) })
+            .catch(err => { reject(err) })
+        })
+        .then
+        .catch(validationErr => { reject(validationErr) });
+    })
+  }
+
   _updateSimulatedRecord(bankID, gameID, value, type) {
     var self = this;
     var bankBalanceSimulation = new BankBalanceSimulation();
