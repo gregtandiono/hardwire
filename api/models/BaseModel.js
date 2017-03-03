@@ -70,12 +70,6 @@ class BaseModel {
     })
   }
 
-  // @NOTE
-  // Do we need server-side pagination?
-  fetchChunk() {
-
-  }
-
   create(data) {
     var self = this;
     return new Promise((resolve, reject) => {
