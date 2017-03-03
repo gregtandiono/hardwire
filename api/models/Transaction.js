@@ -4,10 +4,12 @@
  * [MODEL]
  */
 
-var Promise       = require("bluebird")
-  , _             = require("underscore")
-  , pg            = require("../adapters/db")
-  , BaseModel     = require("./BaseModel");
+var Promise               = require("bluebird")
+  , _                     = require("underscore")
+  , pg                    = require("../adapters/db")
+  , BaseModel             = require("./BaseModel")
+  , BankBalanceSimulation = require("./BankBalanceSimulation")
+  , GameBalanceSimulation = require("./GameBalanceSimulation");
 
 var attributes = {
   id                : {value: "", type: "uuid", required: true},
@@ -33,24 +35,53 @@ class Transaction extends BaseModel {
     this.table = "transactions";
   }
 
-  _deposit() {
+  _updateSimulatedRecord(bankID, gameID, value, type) {
+    var self = this;
+    var bankBalanceSimulation = new BankBalanceSimulation();
+    var gameBalanceSimulation = new GameBalanceSimulation();
 
-    /**
-     * @NOTE
-     * So we will have to connect this to the bank balance simulation
-     * && site balance simulation
-     * to increase value for every transaction
-     */
-  }
-
-  _withdrawal() {
-
-    /**
-     * @NOTE
-     * So we will have to connect this to the bank balance simulation
-     * && site balance simulation
-     * to decrease value for every transaction
-     */
+    return new Promise((resolve, reject) => {
+      bankBalanceSimulation._fetchRecord(bankID)
+        .catch(bankBalanceSimulationError => {
+          reject(bankBalanceSimulationError);
+        })
+        .then(record => {
+          var adjustedValue = null;
+          if (type == "withdraw") {
+            adjustedValue = record.value - value;
+          } else {
+            adjustedValue = record.value + value;
+          }
+          var adjustedRecord = _.extend({}, record, {
+            value: adjustedValue
+          })
+          return bankBalanceSimulation.update(record.id, adjustedRecord)
+        })
+        .then(() => {
+          gameBalanceSimulation._fetchRecord(gameID)
+            .then(record => {
+              var adjustedValue = null;
+              if (type == "withdraw") {
+                adjustedValue = record.value + value;
+              } else {
+                adjustedValue = record.value - value;
+              }
+              var adjustedRecord = _.extend({}, record, {
+                value: adjustedValue
+              })
+              return gameBalanceSimulation.update(record.id, adjustedRecord)
+            })
+            .then(() => {
+              resolve("game and bank simulation updated");
+            })
+            .catch(err => {
+              reject(err);
+            })
+        })
+        .catch(err => {
+          reject(err);
+        })
+    });
 
   }
 }

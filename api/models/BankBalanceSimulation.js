@@ -22,6 +22,18 @@ class BankBalanceSimulation extends BaseModel {
     this.attributes = attributes;
     this.table = "bank_balance_simulation";
   }
+
+  _fetchRecord(bankID) {
+    pg
+      .select("*")
+      .from(self.table)
+      .where({
+        bank_id: bankID,
+        deleted_at: null
+      })
+      .then(rows => { resolve(rows[0]) })
+      .catch(err => { reject(`error while fetching one record from ${self.table} table \n ${err}`) })
+  }
 }
 
 module.exports = BankBalanceSimulation;
