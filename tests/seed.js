@@ -17,7 +17,17 @@ var setUserFixtures = require("./fixtures/users");
 var User         = require("../api/models/User");
 var loginOneUser = require("./helpers/loginOneUser");
 
-var tables = ["banks", "players", "users", "games", "sites", "transactions", "shifts"];
+var tables = [
+  "banks", 
+  "players", 
+  "users", 
+  "games", 
+  "sites", 
+  "transactions", 
+  "shifts", 
+  "bank_balance_simulation",
+  "game_balance_simulation"
+];
 
 
 // =============================
@@ -61,6 +71,17 @@ function seedUser() {
        })
   })
 }
+
+
+/**
+ * @TODO
+ * Seeding has to POST to endpoints from now on
+ * we won't be using models to enter data anymore, except for users
+ * 
+ * - [ ] seed game
+ * - [ ] seed sites
+ * - [ ] seed banks
+ */
 
 tearDown()
   .then(() => {
