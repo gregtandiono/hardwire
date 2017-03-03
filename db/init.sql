@@ -192,6 +192,7 @@ CREATE TABLE IF NOT EXISTS transactions(
   bank_id UUID NOT NULL,
   FOREIGN KEY (player_id) REFERENCES players (id),
   FOREIGN KEY (site_id) REFERENCES sites (id),
+  FOREIGN KEY (game_id) REFERENCES games (id),
   FOREIGN KEY (operator_id) REFERENCES users (id),
   FOREIGN KEY (bank_id) REFERENCES banks (id),
   FOREIGN KEY (shift_id) REFERENCES shifts (id)
