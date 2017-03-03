@@ -14,19 +14,7 @@ router.post("/", (req, res) => {
   const transaction = new Transaction();
   transaction
     .create(req.body)
-    .then(results => { 
-      var { bank_id, game_id } = req.body;
-      transaction._updateSimulatedRecord(
-        bank_id,
-        game_id,
-        req.body.withdraw ? req.body.withdraw : req.body.deposit,
-        req.body.withdraw ? "withdraw" : "deposit"
-      ).then(() => {
-        res.status(200).json({ data: results }) 
-      }).catch(error => {
-        res.status(400).json({ error })
-      })
-    })
+    .then(results => { res.status(200).json({ data: results }) })
     .catch(error => { res.status(400).json({ error }) })
 });
 

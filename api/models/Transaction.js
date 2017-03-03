@@ -47,10 +47,21 @@ class Transaction extends BaseModel {
             .returning("id")
             .insert(filteredData)
             .into(self.table)
-            .then((recordID) => { resolve(recordID[0]) })
+            .then((recordID) => { 
+              var gameID = filteredData.game_id;
+              var bankID = filteredData.bank_id;
+              var value = filteredData.withdraw ? filteredData.withdraw : filteredData.deposit;
+              var transactionType = filteredData.withdraw ? "withdraw" : "deposit";
+              self._updateSimulatedRecord(gameID, bankID, value, transactionType)
+                .then(() => {
+                  resolve(recordID[0]);
+                })
+                .catch(updateSimulatedRecordError => {
+                  reject(updateSimulatedRecordError);
+                })
+            })
             .catch(err => { reject(err) })
         })
-        .then
         .catch(validationErr => { reject(validationErr) });
     })
   }
