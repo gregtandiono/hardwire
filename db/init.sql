@@ -138,6 +138,9 @@ CREATE TABLE IF NOT EXISTS sites(
   FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
 
+CREATE TRIGGER update_modified_column
+BEFORE UPDATE ON sites FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+
 CREATE TABLE IF NOT EXISTS bank_balance_simulation(
   id UUID PRIMARY KEY NOT NULL,
   shift_id UUID,
@@ -148,6 +151,9 @@ CREATE TABLE IF NOT EXISTS bank_balance_simulation(
   FOREIGN KEY (bank_id) REFERENCES banks (id),
   FOREIGN KEY (shift_id) REFERENCES shifts (id),
 );
+
+CREATE TRIGGER update_modified_column
+BEFORE UPDATE ON bank_balance_simulation FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 CREATE TABLE IF NOT EXISTS game_balance_simulation(
   id UUID PRIMARY KEY NOT NULL,
@@ -161,7 +167,7 @@ CREATE TABLE IF NOT EXISTS game_balance_simulation(
 );
 
 CREATE TRIGGER update_modified_column
-BEFORE UPDATE ON sites FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+BEFORE UPDATE ON bank_balance_simulation FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 
 -- Transactions Table
