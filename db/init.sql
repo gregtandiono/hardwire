@@ -177,6 +177,7 @@ CREATE TABLE IF NOT EXISTS transactions(
   name varchar(255) NOT NULL,
   player_id UUID NOT NULL,
   site_id UUID NOT NULL,
+  game_id UUID NOT NULL,
   operator_id UUID NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
