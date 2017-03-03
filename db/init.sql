@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS players(
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   deleted_at TIMESTAMP WITH TIME ZONE,
+  bonus int, 
   FOREIGN KEY (operator_id) REFERENCES users (id),
   FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
@@ -134,6 +135,28 @@ CREATE TABLE IF NOT EXISTS sites(
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   FOREIGN KEY (operator_id) REFERENCES users (id),
+  FOREIGN KEY (shift_id) REFERENCES shifts (id)
+);
+
+CREATE TABLE IF NOT EXISTS bank_balance_simulation(
+  id UUID PRIMARY KEY NOT NULL,
+  shift_id UUID,
+  bank_id UUID,
+  value INT NOT NULL DEFAULT 0,
+  modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+  FOREIGN KEY (bank_id) REFERENCES banks (id),
+  FOREIGN KEY (shift_id) REFERENCES shifts (id),
+);
+
+CREATE TABLE IF NOT EXISTS game_balance_simulation(
+  id UUID PRIMARY KEY NOT NULL,
+  shift_id UUID,
+  game_id UUID,
+  value INT NOT NULL DEFAULT 0,
+  modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  FOREIGN KEY (game_id) REFERENCES games (id),
   FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
 
