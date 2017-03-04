@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS game_balance_simulation(
 );
 
 CREATE TRIGGER update_modified_column
-BEFORE UPDATE ON bank_balance_simulation FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+BEFORE UPDATE ON game_balance_simulation FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 
 -- Transactions Table
