@@ -72,6 +72,22 @@ function seedUser() {
   })
 }
 
+function seedGames() {
+    
+}
+
+function seedSites() {
+
+}
+
+function seedBankSimulation() {
+
+}
+
+function seedGameSimulation() {
+
+}
+
 
 /**
  * @TODO
