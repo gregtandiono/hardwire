@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS bank_balance_simulation(
   bank_id UUID,
   value INT NOT NULL DEFAULT 0,
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   FOREIGN KEY (bank_id) REFERENCES banks (id),
   FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
@@ -177,13 +177,12 @@ BEFORE UPDATE ON game_balance_simulation FOR EACH ROW EXECUTE PROCEDURE update_m
 -- Transactions Table
 CREATE TABLE IF NOT EXISTS transactions(
   id UUID PRIMARY KEY NOT NULL,
-  shift_id UUID,
+  shift_id UUID NOT NULL,
   name varchar(255) NOT NULL,
   player_id UUID NOT NULL,
   site_id UUID NOT NULL,
   game_id UUID NOT NULL,
   operator_id UUID NOT NULL,
-  shift_id UUID NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   reff varchar(255),
