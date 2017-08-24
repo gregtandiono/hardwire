@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS games CASCADE;
 DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS sites CASCADE;
 DROP TABLE IF EXISTS shifts CASCADE;
+DROP TABLE IS EXISTS bank_balance_simulation CASCADE;
+DROP TABLE IS EXISTS game_balance_simulation CASCADE;
 
 DROP TRIGGER IF EXISTS update_modified_column ON users;
 DROP TRIGGER IF EXISTS update_modified_column ON players;
@@ -14,6 +16,8 @@ DROP TRIGGER IF EXISTS update_modified_column ON banks;
 DROP TRIGGER IF EXISTS update_modified_column ON games;
 DROP TRIGGER IF EXISTS update_modified_column ON transactions;
 DROP TRIGGER IF EXISTS update_modified_column ON sites;
+DROP TRIGGER IF EXISTS update_modified_column ON bank_balance_simulation;
+DROP TRIGGER IF EXISTS update_modified_column ON game_balance_simulation;
 
 DROP TYPE IF EXISTS user_types;
 DROP TYPE IF EXISTS bank_types;
@@ -147,7 +151,7 @@ CREATE TABLE IF NOT EXISTS bank_balance_simulation(
   bank_id UUID,
   value INT NOT NULL DEFAULT 0,
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
-  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   FOREIGN KEY (bank_id) REFERENCES banks (id),
   FOREIGN KEY (shift_id) REFERENCES shifts (id)
 );
@@ -167,16 +171,17 @@ CREATE TABLE IF NOT EXISTS game_balance_simulation(
 );
 
 CREATE TRIGGER update_modified_column
-BEFORE UPDATE ON bank_balance_simulation FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+BEFORE UPDATE ON game_balance_simulation FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
 
 
 -- Transactions Table
 CREATE TABLE IF NOT EXISTS transactions(
   id UUID PRIMARY KEY NOT NULL,
-  shift_id UUID,
+  shift_id UUID NOT NULL,
   name varchar(255) NOT NULL,
   player_id UUID NOT NULL,
   site_id UUID NOT NULL,
+  game_id UUID NOT NULL,
   operator_id UUID NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   modified TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
@@ -191,6 +196,7 @@ CREATE TABLE IF NOT EXISTS transactions(
   bank_id UUID NOT NULL,
   FOREIGN KEY (player_id) REFERENCES players (id),
   FOREIGN KEY (site_id) REFERENCES sites (id),
+  FOREIGN KEY (game_id) REFERENCES games (id),
   FOREIGN KEY (operator_id) REFERENCES users (id),
   FOREIGN KEY (bank_id) REFERENCES banks (id),
   FOREIGN KEY (shift_id) REFERENCES shifts (id)
